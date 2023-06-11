@@ -42,8 +42,6 @@ public:
 
 	float GetScreenWidth() const { return m_ScreenWidth; }
 	float GetScreenHeight() const { return m_ScreenHeight; }
-	float GetClockRoamingAreaWidth() const { return m_ClockRoamingAreaWidth; }
-	float GetClockRoamingAreaHeight() const { return m_ClockRoamingAreaHeight; }
 
 	// TODO: Implement these..
 	// SpawnEntity()
@@ -59,8 +57,6 @@ private:
 
 	const float m_ScreenWidth;
 	const float m_ScreenHeight;
-	const float m_ClockRoamingAreaWidth;
-	const float m_ClockRoamingAreaHeight;
 	const int m_ScreenBackgroundColor;
 
 	float m_DeltaTime;

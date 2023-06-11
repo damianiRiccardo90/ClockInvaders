@@ -26,8 +26,6 @@ const unsigned int C_Application::s_Color_White = GetRGB( 255, 255, 255 );
 C_Application::C_Application( const float screenWidth, const float screenHeight )
 	: m_ScreenWidth( screenWidth )
 	, m_ScreenHeight( screenHeight )
-	, m_ClockRoamingAreaWidth( screenWidth )
-	, m_ClockRoamingAreaHeight( screenHeight - ( Cannon::s_Default_OffsetFromBottom * 2.f ) )
 	, m_ScreenBackgroundColor( s_Color_Black )
 	, m_DeltaTime( 0 )
 	, m_Cannon( nullptr )

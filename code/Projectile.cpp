@@ -21,17 +21,7 @@ Projectile::Projectile( const C_Application* owner, const Vector2D& pos )
 	: Entity( owner, C_Application::s_Color_White, s_Default_BBHalfDiag, pos )
 {}
 
-void Projectile::Tick( const float deltaTime )
-{
-	Entity::Tick( deltaTime );
-
-	if ( m_AngularVelocity )
-	{
-		m_Facing.Rotate( m_AngularVelocity * deltaTime );
-	}
-}
-
-void Cannon::Render()
+void Projectile::Render()
 {
 	// Draw an equilateral triangle.
 

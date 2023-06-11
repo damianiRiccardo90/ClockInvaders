@@ -12,15 +12,14 @@ class Vector2D;
 
 //////////////////  C L A S S  D E C L A R A T I O N S  //////////////////
 
-// The cannon that the player can use to shoot at enemies.
+// The projectile (a line) that the cannon shoots at the enemies (the clocks, basically).
 class Projectile : public Entity
 {
 public:
 
-	static const Vector2D s_Default_BBHalfDiag;
+	static const float s_Default_Size;
 
-	Projectile( const C_Application* owner, const Vector2D& pos );
+	Projectile( const C_Application* owner, const Vector2D& pos, const Vector2D& facing );
 
-	virtual void Tick( const float deltaTime ) override;
 	virtual void Render() override;
 };

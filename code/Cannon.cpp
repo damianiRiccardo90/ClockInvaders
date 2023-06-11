@@ -61,9 +61,4 @@ void Cannon::Render()
 	DrawLine( xVertex1, yVertex1, xVertex2, yVertex2, m_Color );
 	DrawLine( xVertex2, yVertex2, xVertex3, yVertex3, m_Color );
 	DrawLine( xVertex3, yVertex3, xVertex1, yVertex1, m_Color );
-	/*
-	const Vector2D raggius = m_Facing * s_Default_Radius;
-	const Vector2D verga = m_Position + raggius;
-	DrawLine( m_Position.GetX(), m_Position.GetY(), verga.GetX(), verga.GetY(), m_Color );
-	*/
 }

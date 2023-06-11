@@ -29,7 +29,12 @@ public:
 	virtual bool IsCollidingWithScreenBorders() const;
 	virtual void HandleScreenBordersCollision() {}
 
-	void SetVelocity( const Vector2D& Velocity ) { m_Velocity = Velocity; }
+	void SetPosition( const Vector2D& pos ) { m_Position = pos; }
+	Vector2D GetPosition() const { return m_Position; }
+	void SetFacing( const Vector2D& vec ) { m_Facing = vec; }
+	Vector2D GetFacing() const { return m_Facing; }
+	void SetVelocity( const Vector2D& vel ) { m_Velocity = vel; }
+	Vector2D GetVelocity() const { return m_Velocity; }
 
 protected:
 
@@ -38,8 +43,8 @@ protected:
 
 	const C_Application* m_Owner;
 	const unsigned int m_Color;
-	// The vector that goes from the center of a rectangle to its lower right vertex, use to define the 
-	// bounding box that is required for collision detection.
+	// The vector that goes from the center of a rectangle to its lower right vertex, used to define the 
+	// bounding box that is required for collision detection (and it's handy for other computations as well).
 	const Vector2D m_BBHalfDiagonal;
 
 	// The center of the object.
