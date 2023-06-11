@@ -28,7 +28,7 @@ public:
 
 	// No entity can collide with the cannon, as I've decided to restrict the clocks roaming area to be
 	// smaller than the entire screen. As the BB can be rotated, a trivial implementation of the collision
-	// detection is not possible, but it's necessary to implement a more complex algorithm, such as 
+	// detection is not possible, but it's necessary to implement a more complex algorithm, such as the
 	// separating axis theorem (SAT).
 	virtual bool IsCollidingWith( const Entity& other ) const override { return false; }
 	// This entity's position is fixed so it makes no sense to check if it collides with the screen borders.

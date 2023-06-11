@@ -22,8 +22,12 @@ public:
 
 	virtual void Tick( const float deltaTime );
 	virtual void Render() = 0;
+
+	// Collisions handling.
 	virtual bool IsCollidingWith( const Entity& other ) const;
+	virtual void HandleCollision( const Entity& other ) {}
 	virtual bool IsCollidingWithScreenBorders() const;
+	virtual void HandleScreenBordersCollision() {}
 
 	void SetVelocity( const Vector2D& Velocity ) { m_Velocity = Velocity; }
 

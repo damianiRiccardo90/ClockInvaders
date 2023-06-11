@@ -26,6 +26,8 @@ const unsigned int C_Application::s_Color_White = GetRGB( 255, 255, 255 );
 C_Application::C_Application( const float screenWidth, const float screenHeight )
 	: m_ScreenWidth( screenWidth )
 	, m_ScreenHeight( screenHeight )
+	, m_ClockRoamingAreaWidth( screenWidth )
+	, m_ClockRoamingAreaHeight( screenHeight - ( Cannon::s_Default_OffsetFromBottom * 2.f ) )
 	, m_ScreenBackgroundColor( s_Color_Black )
 	, m_DeltaTime( 0 )
 	, m_Cannon( nullptr )
@@ -101,23 +103,27 @@ void C_Application::ClearScreen()
 
 void C_Application::CheckCollisions()
 {
-	const auto endIt = m_Entities.end();
 	// Iterate through the collection of entities.
-	for ( auto it1 = m_Entities.begin(); it1 != endIt; ++it1 ) 
+
+	for ( auto it1 = m_Entities.begin(); it1 != m_Entities.end(); ++it1 )
 	{
+		/*
 		// Avoid checking any collision for the cannon.
 		if ( it1->get() == m_Cannon ) continue;
+		*/
 
 		if ( ( *it1 )->IsCollidingWithScreenBorders() )
 		{
 			// Handle the collision between entity1 and the screen borders.
+			( *it1 )->HandleScreenBordersCollision();
 		}
 
-		for ( auto it2 = std::next( it1 ); it2 != endIt; ++it2 ) 
+		for ( auto it2 = std::next( it1 ); it2 != m_Entities.end(); ++it2 )
 		{
 			if ( ( *it1 )->IsCollidingWith( **it2 ) )
 			{
 				// Handle the collision between entity1 and entity2.
+				( *it1 )->HandleCollision( **it2 );
 			}
 		}
 	}

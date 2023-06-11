@@ -42,6 +42,8 @@ public:
 
 	float GetScreenWidth() const { return m_ScreenWidth; }
 	float GetScreenHeight() const { return m_ScreenHeight; }
+	float GetClockRoamingAreaWidth() const { return m_ClockRoamingAreaWidth; }
+	float GetClockRoamingAreaHeight() const { return m_ClockRoamingAreaHeight; }
 
 	// TODO: Implement these..
 	// SpawnEntity()
@@ -51,10 +53,14 @@ private:
 
 	void ProcessInput( const T_PressedKey pressedKeys );
 	void ClearScreen();
+	// Pretty trivial collision check, as I don't have time to do something more efficient. Interesting ideas
+	// could have been quad trees to partition the space and optimize the computation for larger entity pools.
 	void CheckCollisions();
 
 	const float m_ScreenWidth;
 	const float m_ScreenHeight;
+	const float m_ClockRoamingAreaWidth;
+	const float m_ClockRoamingAreaHeight;
 	const int m_ScreenBackgroundColor;
 
 	float m_DeltaTime;
