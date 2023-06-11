@@ -37,8 +37,7 @@ public:
 	void SetY( const float newY ) { y = newY; }
 	float GetY() const { return y; }
 
-	// Rotates the vector to a set degree, or incrementally on top of the existing rotation.
-	Vector2D& Rotate( const float rad, /*const bool incremental = false,*/ const Vector2D origin = Vector2D::s_Zero);
+	Vector2D& Rotate( const float rad, const Vector2D origin = Vector2D::s_Zero);
 	Vector2D Abs() const;
 	void Clamp( const float xMin, const float xMax, const float yMin, const float yMax );
 	float Magnitude() const;

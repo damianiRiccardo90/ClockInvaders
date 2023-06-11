@@ -31,6 +31,8 @@ public:
 	// detection is not possible, but it's necessary to implement a more complex algorithm, such as 
 	// separating axis theorem (SAT).
 	virtual bool IsCollidingWith( const Entity& other ) const override { return false; }
+	// This entity's position is fixed so it makes no sense to check if it collides with the screen borders.
+	virtual bool IsCollidingWithScreenBorders() const override { return false; }
 
 	void SetAngularVelocity( const float angularVelocity ) { m_AngularVelocity = angularVelocity; }
 

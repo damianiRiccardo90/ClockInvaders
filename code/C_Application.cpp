@@ -56,6 +56,9 @@ void C_Application::Tick( const T_PressedKey pressedKeys, const float deltaTime 
 		entity->Tick( m_DeltaTime );
 		entity->Render();
 	}
+
+	// Check the collision between entities and the screen borders, and handle them.
+	CheckCollisions();
 }
 
 void C_Application::ProcessInput( const T_PressedKey pressedKeys )
@@ -94,4 +97,28 @@ void C_Application::ClearScreen()
 	const int screenWidth = static_cast< int >( m_ScreenWidth );
 	const int screenHeight = static_cast< int >( m_ScreenHeight );
 	FillRect( 0, 0, screenWidth, screenHeight, m_ScreenBackgroundColor );
+}
+
+void C_Application::CheckCollisions()
+{
+	const auto endIt = m_Entities.end();
+	// Iterate through the collection of entities.
+	for ( auto it1 = m_Entities.begin(); it1 != endIt; ++it1 ) 
+	{
+		// Avoid checking any collision for the cannon.
+		if ( it1->get() == m_Cannon ) continue;
+
+		if ( ( *it1 )->IsCollidingWithScreenBorders() )
+		{
+			// Handle the collision between entity1 and the screen borders.
+		}
+
+		for ( auto it2 = std::next( it1 ); it2 != endIt; ++it2 ) 
+		{
+			if ( ( *it1 )->IsCollidingWith( **it2 ) )
+			{
+				// Handle the collision between entity1 and entity2.
+			}
+		}
+	}
 }

@@ -124,13 +124,10 @@ bool Vector2D::operator!=( const Vector2D& other ) const
 	return x != other.x || y != other.y;
 }
 
-Vector2D& Vector2D::Rotate( const float rad, //const bool incremental /*= false */,
-	const Vector2D origin /*= s_Zero*/ )
+Vector2D& Vector2D::Rotate( const float rad, const Vector2D origin /*= s_Zero*/)
 {
-	//accumulatedRotation = incremental ? accumulatedRotation + rad : rad;
-
-	const float sin = std::sin( /*accumulatedRotation*/rad );
-	const float cos = std::cos( /*accumulatedRotation*/rad );
+	const float sin = std::sin( rad );
+	const float cos = std::cos( rad );
 
 	*this -= origin;
 

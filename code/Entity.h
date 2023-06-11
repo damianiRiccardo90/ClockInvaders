@@ -23,6 +23,7 @@ public:
 	virtual void Tick( const float deltaTime );
 	virtual void Render() = 0;
 	virtual bool IsCollidingWith( const Entity& other ) const;
+	virtual bool IsCollidingWithScreenBorders() const;
 
 	void SetVelocity( const Vector2D& Velocity ) { m_Velocity = Velocity; }
 
