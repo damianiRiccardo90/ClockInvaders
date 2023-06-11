@@ -91,6 +91,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
@@ -99,6 +100,7 @@
     <ClInclude Include="C_Application.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
