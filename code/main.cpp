@@ -79,7 +79,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	HWND hwndMain = InitializeGraphics( init );
 	
 	// Clear screen
-	FillRect(0, 0, static_cast< float >( k_ScreenWidth ), static_cast< float >( k_ScreenHeight ), 0);
+	FillRect(0, 0, k_ScreenWidth, k_ScreenHeight, 0);
 	
 	{
 		C_Application app(k_ScreenWidth, k_ScreenHeight);

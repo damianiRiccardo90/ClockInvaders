@@ -33,6 +33,7 @@ void Entity::Tick( const float deltaTime )
 
 bool Entity::IsCollidingWith( const Entity& other ) const
 {
+	/*
 	const float xBBDiag;
 	const float yBBDiag;
 	const float xBBDiagOther;
@@ -47,6 +48,7 @@ bool Entity::IsCollidingWith( const Entity& other ) const
 	if ( rect1.a.y <= rect2.d.y || rect2.a.y <= rect1.d.y ) {
 		return false;
 	}
+	*/
 
 	return true;
 }
