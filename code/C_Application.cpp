@@ -103,11 +103,11 @@ void C_Application::ProcessInput( const T_PressedKey pressedKeys )
 
 	if ( pressedKeys & s_KeyLeft )
 	{
-		m_Cannon->SetAngularVelocity( -Cannon::s_Default_AngularVelocity );
+		m_Cannon->SetAngularVelocity( Cannon::s_Default_AngularVelocity );
 	}
 	else if ( pressedKeys & s_KeyRight )
 	{
-		m_Cannon->SetAngularVelocity( Cannon::s_Default_AngularVelocity );
+		m_Cannon->SetAngularVelocity( -Cannon::s_Default_AngularVelocity );
 	}
 	else
 	{
