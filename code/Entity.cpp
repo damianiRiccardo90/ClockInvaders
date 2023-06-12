@@ -10,7 +10,7 @@
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
 Entity::Entity( C_Application* owner, const unsigned int color, const Vector2D& halfDiagBB, 
-	const Vector2D& pos, const Vector2D& facing /*= s_Up*/, const Vector2D& vel /*= s_Zero */ )
+	const Vector2D& pos, const Vector2D& facing /*= Vector2D::s_Up*/, const Vector2D& vel /*= Vector2D::s_Zero */ )
 	: m_Owner( owner )
 	, m_Color( color )
 	, m_BBHalfDiagonal( halfDiagBB.Abs() )

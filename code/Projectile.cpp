@@ -10,8 +10,8 @@
 
 //////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
-const float Projectile::s_Default_HalfLength = 2.5f;
-const float Projectile::s_Default_Velocity = 5.f;
+const float Projectile::s_Default_HalfLength = 3.f;
+const float Projectile::s_Default_Velocity = 150.f;
 
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 

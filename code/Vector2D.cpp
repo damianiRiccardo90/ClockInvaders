@@ -4,10 +4,12 @@
 #include "Vector2D.h"
 
 // System.
+#include <algorithm>
 #include <cmath>
 
 //////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
+const float Vector2D::s_PI = 3.1415926536f;
 const Vector2D Vector2D::s_Up( 0.f, -1.f );
 const Vector2D Vector2D::s_Down( 0.f, 1.f );
 const Vector2D Vector2D::s_Left( -1.f, 0.f );
@@ -19,13 +21,11 @@ const Vector2D Vector2D::s_Zero( 0.f, 0.f );
 Vector2D::Vector2D( const float x /*= 0.f*/, const float y /*= 0.f*/ )
 	: x( x )
 	, y( y )
-	, accumulatedRotation( 0.f )
 {}
 
 Vector2D::Vector2D( const Vector2D& other )
 	: x( other.x )
 	, y( other.y )
-	, accumulatedRotation( other.accumulatedRotation )
 {}
 
 Vector2D& Vector2D::operator=( const Vector2D& other )
@@ -34,7 +34,6 @@ Vector2D& Vector2D::operator=( const Vector2D& other )
 	{
 		x = other.x;
 		y = other.y;
-		accumulatedRotation = other.accumulatedRotation;
 	}
 	return *this;
 }
@@ -131,19 +130,57 @@ bool Vector2D::operator!=( const Vector2D& other ) const
 
 Vector2D& Vector2D::Rotate( const float rad, const Vector2D origin /*= s_Zero*/)
 {
-	const float sin = std::sin( rad );
-	const float cos = std::cos( rad );
+	const float sin = std::sin( -rad );
+	const float cos = std::cos( -rad ); 
 
 	*this -= origin;
 
 	const float oldX = x;
 	const float oldY = y;
-	x = oldX * cos - oldY * sin;
-	y = oldX * sin + oldY * cos;
+	//x = oldX * cos - oldY * sin;
+	//y = oldX * sin + oldY * cos;
+	x = oldX * cos + oldY * sin;
+	y = -oldX * sin + oldY * cos;
 
 	*this += origin;
 
 	return *this;
+}
+
+Vector2D& Vector2D::ClampRotate( const float rad, const float min, const float max, 
+	const Vector2D origin /*= s_Zero*/ )
+{
+	const float oldRotation = GetRotation();
+	const float newRotation = oldRotation + rad;
+	const float clampedRotation = std::clamp( newRotation, min, max );
+	const float rotationDelta = clampedRotation - oldRotation;
+
+	const float sin = std::sin( rotationDelta );
+	const float cos = std::cos( rotationDelta );
+
+	*this -= origin;
+
+	x = x * cos - y * sin;
+	y = x * sin + y * cos;
+
+	*this += origin;
+
+	return *this;
+}
+
+float Vector2D::GetRotation() const
+{
+	// The std::atan2 function returns the angle in radians within the range[ -PI, PI ], with positive angles in 
+	// the counterclockwise direction.
+	float rotation = std::atan2( -y, x );
+	// If the calculated angle is negative we need to add 2 * PI (a full circle) to bring it within the 
+	// range [0, 2PI].
+	if ( rotation < 0.f )
+	{ 
+		rotation += 2 * s_PI;
+	}
+
+	return rotation;
 }
 
 Vector2D Vector2D::Abs() const
@@ -153,8 +190,8 @@ Vector2D Vector2D::Abs() const
 
 void Vector2D::Clamp( const float xMin, const float xMax, const float yMin, const float yMax )
 {
-	x = ( x < xMin ) ? xMin : ( ( x > xMax ) ? xMax : x );
-	y = ( y < yMin ) ? yMin : ( ( y > yMax ) ? yMax : y );
+	x = std::clamp( x, xMin, xMax );
+	y = std::clamp( y, yMin, yMax );
 }
 
 float Vector2D::Magnitude() const

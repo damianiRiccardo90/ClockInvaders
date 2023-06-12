@@ -21,6 +21,9 @@ public:
 	static const float s_Default_OffsetFromBottom;
 	static const float s_Default_AngularVelocity;
 	static const float s_Default_BurstFireDelay;
+	static const float s_Default_RotationAngleMin;
+	static const float s_Default_RotationAngleMax;
+
 
 	Cannon( C_Application* owner );
 

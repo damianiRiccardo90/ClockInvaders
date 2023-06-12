@@ -65,8 +65,8 @@ void C_Application::ClearScreen()
 	FillRect( 0, 0, screenWidth, screenHeight, m_ScreenBackgroundColor );
 }
 
-void C_Application::RequestSpawnEntity( const Entity::Type type, const Vector2D& pos /*= s_Zero*/, 
-	const Vector2D& facing /*= s_Up */ )
+void C_Application::RequestSpawnEntity( const Entity::Type type, const Vector2D& pos /*= Vector2D::s_Zero*/, 
+	const Vector2D& facing /*= Vector2D::s_Up */ )
 {
 	switch ( type )
 	{

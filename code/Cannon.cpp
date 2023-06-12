@@ -3,9 +3,6 @@
 // Header.
 #include "Cannon.h"
 
-// System.
-#include <cmath>
-
 // Local.
 #include "C_Application.h"
 #include "graphics.h"
@@ -17,7 +14,9 @@
 const Vector2D Cannon::s_Default_BBHalfDiag( 25.f, 25.f );
 const float Cannon::s_Default_OffsetFromBottom = 50.f;
 const float Cannon::s_Default_AngularVelocity = 1.5f;
-const float Cannon::s_Default_BurstFireDelay = 0.3f;
+const float Cannon::s_Default_BurstFireDelay = 0.05f;
+const float Cannon::s_Default_RotationAngleMin = 0.f;
+const float Cannon::s_Default_RotationAngleMax = Vector2D::s_PI;
 
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
@@ -36,7 +35,8 @@ void Cannon::Tick( const float deltaTime )
 
 	if ( m_AngularVelocity )
 	{
-		m_Facing.Rotate( m_AngularVelocity * deltaTime );
+		m_Facing.ClampRotate( m_AngularVelocity * deltaTime, 
+			s_Default_RotationAngleMin, s_Default_RotationAngleMax );
 	}
 
 	if ( m_IsFiring )
@@ -47,8 +47,7 @@ void Cannon::Tick( const float deltaTime )
 
 void Cannon::Render()
 {
-	const float pi = 2.f * std::acos( 0.f );
-	const float rotationAngle = 2 * pi / 3; // 120 degrees in radians
+	const float rotationAngle = 2 * Vector2D::s_PI / 3; // 120 degrees in radians
 
 	// Scaling the facing vector by the BB radius.
 	Vector2D radius = m_Facing * s_Default_BBHalfDiag.GetX();

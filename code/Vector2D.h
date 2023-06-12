@@ -6,6 +6,8 @@ class Vector2D
 {
 public:
 
+	static const float s_PI;
+
 	static const Vector2D s_Up;
 	static const Vector2D s_Down;
 	static const Vector2D s_Left;
@@ -39,6 +41,9 @@ public:
 	float GetY() const { return y; }
 
 	Vector2D& Rotate( const float rad, const Vector2D origin = Vector2D::s_Zero);
+	Vector2D& ClampRotate( const float rad, const float min, const float max, const Vector2D origin = s_Zero );
+	// Returns the rotation in the range [0, 2PI], rotating counter-clockwise and starting from the s_Right vector.
+	float GetRotation() const;
 	Vector2D Abs() const;
 	void Clamp( const float xMin, const float xMax, const float yMin, const float yMax );
 	float Magnitude() const;
@@ -48,5 +53,4 @@ private:
 
 	float x;
 	float y;
-	float accumulatedRotation;
 };
