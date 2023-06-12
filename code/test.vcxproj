@@ -89,6 +89,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cannon.cpp" />
+    <ClCompile Include="Clock.cpp" />
     <ClCompile Include="C_Application.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="graphics.cpp" />
@@ -99,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cannon.h" />
+    <ClInclude Include="Clock.h" />
     <ClInclude Include="C_Application.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="graphics.h" />
