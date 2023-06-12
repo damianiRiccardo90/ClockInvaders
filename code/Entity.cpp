@@ -9,14 +9,15 @@
 
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
-Entity::Entity( const C_Application* owner, const unsigned int color, const Vector2D& halfDiagBB, 
-	const Vector2D& pos )
+Entity::Entity( C_Application* owner, const unsigned int color, const Vector2D& halfDiagBB, 
+	const Vector2D& pos, const Vector2D& facing /*= s_Up*/, const Vector2D& vel /*= s_Zero */ )
 	: m_Owner( owner )
 	, m_Color( color )
 	, m_BBHalfDiagonal( halfDiagBB.Abs() )
 	, m_Position( pos )
-	, m_Facing( Vector2D::s_Up )
-	, m_Velocity( Vector2D::s_Zero )
+	, m_Facing( facing )
+	, m_Velocity( vel )
+	, m_IsPendingDestruction( false )
 {}
 
 void Entity::Tick( const float deltaTime )

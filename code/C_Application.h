@@ -21,6 +21,7 @@ public:
 	
 	typedef unsigned int T_PressedKey;
 
+	// Keys.
 	static const T_PressedKey s_KeyLeft;
 	static const T_PressedKey s_KeyUp;
 	static const T_PressedKey s_KeyRight;
@@ -43,17 +44,25 @@ public:
 	float GetScreenWidth() const { return m_ScreenWidth; }
 	float GetScreenHeight() const { return m_ScreenHeight; }
 
-	// TODO: Implement these..
-	// SpawnEntity()
-	// DestroyEntity()
+	void ClearScreen();
+
+	void RequestSpawnEntity( const Entity::Type type, const Vector2D& pos = Vector2D::s_Zero, 
+		const Vector2D& facing = Vector2D::s_Up );
 
 private:
 
+	// Process the input from the keyboard.
 	void ProcessInput( const T_PressedKey pressedKeys );
-	void ClearScreen();
-	// Pretty trivial collision check, as I don't have time to do something more efficient. Interesting ideas
-	// could have been quad trees to partition the space and optimize the computation for larger entity pools.
-	void CheckCollisions();
+	// Check the collision between entities and the screen borders, and handle them.
+	void CheckEntityCollisions();
+	// Make all the entities "tick".
+	void UpdateEntities();
+	// Spawns all the entities that were requested during this frame.
+	void SpawnEntities();
+	// Draw every entity on screen.
+	void RenderEntities();
+	// Iterate over each entity to check if we should remove them from the game.
+	void CheckEntityDestruction();
 
 	const float m_ScreenWidth;
 	const float m_ScreenHeight;
@@ -61,6 +70,11 @@ private:
 
 	float m_DeltaTime;
 
+	// Keeping a separate raw pointer to the cannon entity for accessing it with ease.
 	Cannon* m_Cannon;
+	// All the entities currently in game.
 	std::vector< std::unique_ptr< Entity > > m_Entities;
+	// Entities that are waiting to be spawned (avoids invalidating iterators if, for instance, an entity wants to
+	// spawn another one while updating).
+	std::vector< std::unique_ptr< Entity > > m_ToBeSpawnedEntities;
 };

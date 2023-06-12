@@ -17,9 +17,13 @@ class Projectile : public Entity
 {
 public:
 
-	static const float s_Default_Size;
+	static const float s_Default_HalfLength;
+	static const float s_Default_Velocity;
 
-	Projectile( const C_Application* owner, const Vector2D& pos, const Vector2D& facing );
+	Projectile( C_Application* owner, const Vector2D& pos, const Vector2D& facing );
 
+	// Draw a line.
 	virtual void Render() override;
+	// Destroy the projectile when it hits the screen borders.
+	virtual void HandleScreenBordersCollision() override;
 };

@@ -3,52 +3,41 @@
 // Header.
 #include "Projectile.h"
 
-// System.
-//#include <cmath>
-
 // Local.
 #include "C_Application.h"
-//#include "graphics.h"
-#include "Vector2D.h"
+#include "graphics.h"
+//#include "Vector2D.h"
 
 //////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
-const Vector2D Projectile::s_Default_BBHalfDiag( 25.f, 25.f );
+const float Projectile::s_Default_HalfLength = 2.5f;
+const float Projectile::s_Default_Velocity = 5.f;
 
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
-Projectile::Projectile( const C_Application* owner, const Vector2D& pos )
-	: Entity( owner, C_Application::s_Color_White, s_Default_BBHalfDiag, pos )
+Projectile::Projectile( C_Application* owner, const Vector2D& pos, const Vector2D& facing )
+	// The BB is a rectangle that has the projectile (which is just a line) as its diagonal, so to find the vector
+	// that goes from the center to the lower right vertex of the BB, I need to take the line direction, retrieve 
+	// its absolute value (so that it points in the right direction no matter the rotation applied) and then scale 
+	// it using half the total length of the line (which represents a projectile). I'm assuming the facing vector
+	// is already normalized.
+	: Entity( owner, C_Application::s_Color_White, Vector2D( facing.Abs() * s_Default_HalfLength ), pos,
+		facing, facing * s_Default_Velocity )
 {}
 
 void Projectile::Render()
 {
-	// Draw an equilateral triangle.
+	const Vector2D lineStart = m_Position - m_Facing * s_Default_HalfLength;
+	const Vector2D lineEnd = m_Position + m_Facing * s_Default_HalfLength;
 
-	const float pi = 2.f * std::acos( 0.f );
-	const float rotationAngle = 2 * pi / 3; // 120 degrees in radians
+	const int xLineStart = static_cast< int >( lineStart.GetX() );
+	const int yLineStart = static_cast< int >( lineStart.GetY() );
+	const int xLineEnd = static_cast< int >( lineEnd.GetX() );
+	const int yLineEnd = static_cast< int >( lineEnd.GetY() );
+	DrawLine( xLineStart, yLineStart, xLineEnd, yLineEnd, m_Color );
+}
 
-	// Scaling the facing vector by the BB radius.
-	Vector2D radius = m_Facing * s_Default_BBHalfDiag.GetX();
-
-	const Vector2D vertex1 = m_Position + radius;
-
-	// Rotate the radius by 120 degrees twice to obtain the other two vertices
-	const Vector2D vertex2 = m_Position + radius.Rotate( rotationAngle );
-	const Vector2D vertex3 = m_Position + radius.Rotate( rotationAngle );
-
-	const int xVertex1 = static_cast<int>( vertex1.GetX() );
-	const int yVertex1 = static_cast<int>( vertex1.GetY() );
-	const int xVertex2 = static_cast<int>( vertex2.GetX() );
-	const int yVertex2 = static_cast<int>( vertex2.GetY() );
-	const int xVertex3 = static_cast<int>( vertex3.GetX() );
-	const int yVertex3 = static_cast<int>( vertex3.GetY() );
-	DrawLine( xVertex1, yVertex1, xVertex2, yVertex2, m_Color );
-	DrawLine( xVertex2, yVertex2, xVertex3, yVertex3, m_Color );
-	DrawLine( xVertex3, yVertex3, xVertex1, yVertex1, m_Color );
-	/*
-	const Vector2D raggius = m_Facing * s_Default_Radius;
-	const Vector2D verga = m_Position + raggius;
-	DrawLine( m_Position.GetX(), m_Position.GetY(), verga.GetX(), verga.GetY(), m_Color );
-	*/
+void Projectile::HandleScreenBordersCollision()
+{
+	Destroy();
 }

@@ -6,6 +6,7 @@
 // Local.
 #include "Cannon.h"
 #include "graphics.h"
+#include "Projectile.h"
 
 //////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
@@ -32,83 +33,108 @@ C_Application::C_Application( const float screenWidth, const float screenHeight 
 	, m_Entities()
 {
 	// Spawning the cannon
-
-	std::unique_ptr< Entity > cannonUniquePtr = std::make_unique< Cannon >( this );
-	m_Entities.push_back( std::move( cannonUniquePtr ) );
-	// Keeping a separate raw pointer to the cannon entity for accessing it with ease.
-	m_Cannon = static_cast< Cannon* >( m_Entities.back().get() );
+	RequestSpawnEntity( Entity::Type::CANNON );
 }
 
 void C_Application::Tick( const T_PressedKey pressedKeys, const float deltaTime )
 {
+	if ( deltaTime == 0.f ) return;
+
 	// Update cached delta time.
 	m_DeltaTime = deltaTime;
 
-	// Key processing.
+	// The following is a common order of execution for a game system.
+
 	ProcessInput( pressedKeys );
 
-	// Clear the screen before drawing the entities.
-	ClearScreen();
+	CheckEntityCollisions();
 
-	// Make all the entities "tick", and then draw them on screen.
-	for ( const auto& entity : m_Entities ) 
-	{
-		entity->Tick( m_DeltaTime );
-		entity->Render();
-	}
+	UpdateEntities();
 
-	// Check the collision between entities and the screen borders, and handle them.
-	CheckCollisions();
-}
+	SpawnEntities();
 
-void C_Application::ProcessInput( const T_PressedKey pressedKeys )
-{
-	if ( pressedKeys & s_KeyLeft )
-	{
-		if ( m_Cannon )
-		{
-			m_Cannon->SetAngularVelocity( -Cannon::s_Default_AngularVelocity );
-		}
-	}
-	else if ( pressedKeys & s_KeyRight )
-	{
-		if ( m_Cannon )
-		{
-			m_Cannon->SetAngularVelocity( Cannon::s_Default_AngularVelocity );
-		}
-	}
-	else
-	{
-		if ( m_Cannon )
-		{
-			m_Cannon->SetAngularVelocity( 0.f );
-		}
-	}
+	RenderEntities();
 
-	if ( pressedKeys & s_KeySpace )
-	{
-		// TODO: Implement shooting.
-	}
-	// TODO: Implement graceful exit on esc key.
+	CheckEntityDestruction();
 }
 
 void C_Application::ClearScreen()
 {
-	const int screenWidth = static_cast< int >( m_ScreenWidth );
-	const int screenHeight = static_cast< int >( m_ScreenHeight );
+	const int screenWidth = static_cast<int>( m_ScreenWidth );
+	const int screenHeight = static_cast<int>( m_ScreenHeight );
 	FillRect( 0, 0, screenWidth, screenHeight, m_ScreenBackgroundColor );
 }
 
-void C_Application::CheckCollisions()
+void C_Application::RequestSpawnEntity( const Entity::Type type, const Vector2D& pos /*= s_Zero*/, 
+	const Vector2D& facing /*= s_Up */ )
 {
-	// Iterate through the collection of entities.
+	switch ( type )
+	{
+		case Entity::Type::CANNON:
+		{
+			// There can be only one.
+			if ( !m_Cannon )
+			{
+				std::unique_ptr< Entity > cannonUniquePtr = std::make_unique< Cannon >( this );
+				// Go straight to the entities vector, without passing through the spawning list.
+				m_Entities.push_back( std::move( cannonUniquePtr ) );
+
+				m_Cannon = static_cast< Cannon* >( m_Entities.back().get() );
+			}
+
+			break;
+		}
+
+		case Entity::Type::PROJECTILE:
+		{
+			std::unique_ptr< Entity > projectileUniquePtr = std::make_unique< Projectile >( this, pos, facing );
+			m_ToBeSpawnedEntities.push_back( std::move( projectileUniquePtr ) );
+
+			break;
+		}
+
+		default: break;
+	}
+}
+
+void C_Application::ProcessInput( const T_PressedKey pressedKeys )
+{
+	if ( !m_Cannon ) return;
+
+	if ( pressedKeys & s_KeyLeft )
+	{
+		m_Cannon->SetAngularVelocity( -Cannon::s_Default_AngularVelocity );
+	}
+	else if ( pressedKeys & s_KeyRight )
+	{
+		m_Cannon->SetAngularVelocity( Cannon::s_Default_AngularVelocity );
+	}
+	else
+	{
+		m_Cannon->SetAngularVelocity( 0.f );
+	}
+
+	if ( pressedKeys & s_KeySpace )
+	{
+		m_Cannon->SetFiring( true );
+	}
+	else
+	{
+		m_Cannon->SetFiring( false );
+	}
+
+	// TODO: Implement graceful exit on esc key?
+}
+
+void C_Application::CheckEntityCollisions()
+{
+	// Pretty trivial collision check, as I don't have time to do something more efficient. Interesting ideas
+	// could have been quad trees to partition the space and optimize the computation for larger entity pools.
 
 	for ( auto it1 = m_Entities.begin(); it1 != m_Entities.end(); ++it1 )
 	{
-		/*
 		// Avoid checking any collision for the cannon.
 		if ( it1->get() == m_Cannon ) continue;
-		*/
 
 		if ( ( *it1 )->IsCollidingWithScreenBorders() )
 		{
@@ -123,6 +149,53 @@ void C_Application::CheckCollisions()
 				// Handle the collision between entity1 and entity2.
 				( *it1 )->HandleCollision( **it2 );
 			}
+		}
+	}
+}
+
+void C_Application::UpdateEntities()
+{
+	for ( auto it = m_Entities.begin(); it != m_Entities.end(); ++it )
+	{
+		( *it )->Tick( m_DeltaTime );
+	}
+}
+
+void C_Application::SpawnEntities()
+{
+	// Transfer the entities from the to-be-spawned list to the main entity list.
+	for ( auto it = m_ToBeSpawnedEntities.begin(); it != m_ToBeSpawnedEntities.end(); ++it )
+	{
+		m_Entities.push_back( std::move( *it ) );
+	}
+
+	// Clear the to-be-spawned list after transferring the entities.
+	m_ToBeSpawnedEntities.clear();
+}
+
+void C_Application::RenderEntities()
+{
+	// Clear the screen before drawing the entities.
+	ClearScreen();
+
+	for ( auto it = m_Entities.begin(); it != m_Entities.end(); ++it )
+	{
+		( *it )->Render();
+	}
+}
+
+void C_Application::CheckEntityDestruction()
+{
+	for ( auto it = m_Entities.begin(); it != m_Entities.end(); )
+	{
+		// The cannon is not supposed to be removed at anytime.
+		if ( ( *it )->IsPendingDestruction() && it->get() != m_Cannon )
+		{
+			it = m_Entities.erase( it );
+		}
+		else
+		{
+			++it;
 		}
 	}
 }

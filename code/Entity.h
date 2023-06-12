@@ -16,8 +16,16 @@ class Entity
 {
 public:
 
-	explicit Entity( const C_Application* owner, const unsigned int color, const Vector2D& halfDiagBB, 
-		const Vector2D& pos );
+	enum class Type
+	{
+		CANNON,
+		PROJECTILE,
+
+		INVALID,
+	};
+
+	Entity( C_Application* owner, const unsigned int color, const Vector2D& halfDiagBB, const Vector2D& pos, 
+		const Vector2D& facing = Vector2D::s_Up, const Vector2D& vel = Vector2D::s_Zero );
 	virtual ~Entity() {}
 
 	virtual void Tick( const float deltaTime );
@@ -36,12 +44,15 @@ public:
 	void SetVelocity( const Vector2D& vel ) { m_Velocity = vel; }
 	Vector2D GetVelocity() const { return m_Velocity; }
 
+	void Destroy() { m_IsPendingDestruction = true; }
+	bool IsPendingDestruction() const { return m_IsPendingDestruction; }
+
 protected:
 
 	// Avoids going outside of the screen boundaries.
 	void ClampPosition();
 
-	const C_Application* m_Owner;
+	C_Application* m_Owner;
 	const unsigned int m_Color;
 	// The vector that goes from the center of a rectangle to its lower right vertex, used to define the 
 	// bounding box that is required for collision detection (and it's handy for other computations as well).
@@ -53,4 +64,6 @@ protected:
 	Vector2D m_Facing;
 	// The vector that represent the current velocity of the object when it is moving.
 	Vector2D m_Velocity;
+
+	bool m_IsPendingDestruction;
 };

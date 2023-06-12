@@ -22,6 +22,7 @@ public:
 	void operator+=( const float scalar );
 	Vector2D operator-( const Vector2D& other ) const;
 	Vector2D operator-( const float scalar ) const;
+	Vector2D operator-() const;
 	void operator-=( const Vector2D& other );
 	void operator-=( const float scalar );
 	Vector2D operator*( const float scalar ) const; // Scalar-Vector Product.
@@ -41,7 +42,7 @@ public:
 	Vector2D Abs() const;
 	void Clamp( const float xMin, const float xMax, const float yMin, const float yMax );
 	float Magnitude() const;
-	Vector2D& Normalize();
+	Vector2D Normalized() const;
 
 private:
 

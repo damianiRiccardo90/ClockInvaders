@@ -83,6 +83,11 @@ void Vector2D::operator-=( const float scalar )
 	y -= scalar;
 }
 
+Vector2D Vector2D::operator-() const
+{
+	return Vector2D( -x, -y );
+}
+
 Vector2D Vector2D::operator*( const float scalar ) const
 {
 	return Vector2D( x * scalar, y * scalar );
@@ -157,14 +162,10 @@ float Vector2D::Magnitude() const
 	return std::sqrt( x * x + y * y );
 }
 
-Vector2D& Vector2D::Normalize()
+Vector2D Vector2D::Normalized() const
 {
-	const float magnitude = Magnitude();
-	if ( magnitude != 0.f )
-	{
-		x /= magnitude;
-		y /= magnitude;
-	}
+	Vector2D output( *this );
+	output /= Magnitude();
 
-	return *this;
+	return output;
 }
