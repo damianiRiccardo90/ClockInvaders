@@ -6,11 +6,11 @@
 // Local.
 #include "C_Application.h"
 #include "graphics.h"
-//#include "Vector2D.h"
 
 //////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
 const float Projectile::s_Default_HalfLength = 3.f;
+const unsigned int Projectile::s_Default_Color = C_Application::s_Color_White;
 const float Projectile::s_Default_Velocity = 150.f;
 
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
@@ -21,8 +21,8 @@ Projectile::Projectile( C_Application* owner, const Vector2D& pos, const Vector2
 	// its absolute value (so that it points in the right direction no matter the rotation applied) and then scale 
 	// it using half the total length of the line (which represents a projectile). I'm assuming the facing vector
 	// is already normalized.
-	: Entity( owner, C_Application::s_Color_White, Vector2D( facing.Abs() * s_Default_HalfLength ), pos,
-		facing, facing * s_Default_Velocity )
+	: Entity( owner, s_Default_Color, Vector2D( facing.Abs() * s_Default_HalfLength ), pos,	facing, 
+		facing * s_Default_Velocity )
 {}
 
 void Projectile::Render()

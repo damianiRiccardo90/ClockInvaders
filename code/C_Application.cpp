@@ -32,8 +32,7 @@ C_Application::C_Application( const float screenWidth, const float screenHeight 
 	, m_Cannon( nullptr )
 	, m_Entities()
 {
-	// Spawning the cannon
-	RequestSpawnEntity( Entity::Type::CANNON );
+	SpawnStartingEntities();
 }
 
 void C_Application::Tick( const T_PressedKey pressedKeys, const float deltaTime )
@@ -56,13 +55,6 @@ void C_Application::Tick( const T_PressedKey pressedKeys, const float deltaTime 
 	RenderEntities();
 
 	CheckEntityDestruction();
-}
-
-void C_Application::ClearScreen()
-{
-	const int screenWidth = static_cast<int>( m_ScreenWidth );
-	const int screenHeight = static_cast<int>( m_ScreenHeight );
-	FillRect( 0, 0, screenWidth, screenHeight, m_ScreenBackgroundColor );
 }
 
 void C_Application::RequestSpawnEntity( const Entity::Type type, const Vector2D& pos /*= Vector2D::s_Zero*/, 
@@ -198,4 +190,17 @@ void C_Application::CheckEntityDestruction()
 			++it;
 		}
 	}
+}
+
+void C_Application::ClearScreen()
+{
+	const int screenWidth = static_cast<int>( m_ScreenWidth );
+	const int screenHeight = static_cast<int>( m_ScreenHeight );
+	FillRect( 0, 0, screenWidth, screenHeight, m_ScreenBackgroundColor );
+}
+
+void C_Application::SpawnStartingEntities()
+{
+	// Spawning the cannon
+	RequestSpawnEntity( Entity::Type::CANNON );
 }

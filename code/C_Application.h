@@ -44,8 +44,6 @@ public:
 	float GetScreenWidth() const { return m_ScreenWidth; }
 	float GetScreenHeight() const { return m_ScreenHeight; }
 
-	void ClearScreen();
-
 	void RequestSpawnEntity( const Entity::Type type, const Vector2D& pos = Vector2D::s_Zero, 
 		const Vector2D& facing = Vector2D::s_Up );
 
@@ -63,6 +61,9 @@ private:
 	void RenderEntities();
 	// Iterate over each entity to check if we should remove them from the game.
 	void CheckEntityDestruction();
+
+	void ClearScreen();
+	void SpawnStartingEntities();
 
 	const float m_ScreenWidth;
 	const float m_ScreenHeight;

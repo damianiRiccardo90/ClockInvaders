@@ -8,7 +8,6 @@
 ////////////////  F O R W A R D  D E C L A R A T I O N S  ////////////////
 
 class C_Application;
-class Vector2D;
 
 //////////////////  C L A S S  D E C L A R A T I O N S  //////////////////
 
@@ -18,6 +17,7 @@ class Projectile : public Entity
 public:
 
 	static const float s_Default_HalfLength;
+	static const unsigned int s_Default_Color;
 	static const float s_Default_Velocity;
 
 	Projectile( C_Application* owner, const Vector2D& pos, const Vector2D& facing );

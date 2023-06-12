@@ -45,20 +45,20 @@ bool Entity::IsCollidingWith( const Entity& other ) const
 	const float yBBDiagOther = other.m_BBHalfDiagonal.GetY();
 
 	// Lower right vertices (from this Entity, and the other one).
-	const Vector2D lowRxVx = Vector2D( xPos + xBBDiag, yPos + yBBDiag );
-	const Vector2D lowRxVxOther = Vector2D( xPosOther + xBBDiagOther, yPosOther + yBBDiagOther );
+	const Vector2D lowRtVt = Vector2D( xPos + xBBDiag, yPos + yBBDiag );
+	const Vector2D lowRtVtOther = Vector2D( xPosOther + xBBDiagOther, yPosOther + yBBDiagOther );
 	// Upper left vertices (from this Entity, and the other one).
-	const Vector2D upLxVx = Vector2D( xPos - xBBDiag, yPos - yBBDiag );
-	const Vector2D upLxVxOther = Vector2D( xPosOther - xBBDiagOther, yPosOther - yBBDiagOther );
+	const Vector2D upLtVt = Vector2D( xPos - xBBDiag, yPos - yBBDiag );
+	const Vector2D upLtVtOther = Vector2D( xPosOther - xBBDiagOther, yPosOther - yBBDiagOther );
 
 	// Check if the horizontal ranges do not overlap.
-	if ( lowRxVx.GetX() < upLxVxOther.GetX() || lowRxVxOther.GetX() < upLxVx.GetX() )
+	if ( lowRtVt.GetX() < upLtVtOther.GetX() || lowRtVtOther.GetX() < upLtVt.GetX() )
 	{
 		return false;
 	}
 
 	// Check if the vertical ranges do not overlap.
-	if ( upLxVx.GetY() < lowRxVxOther.GetY() || upLxVxOther.GetY() < lowRxVx.GetY() )
+	if ( upLtVt.GetY() < lowRtVtOther.GetY() || upLtVtOther.GetY() < lowRtVt.GetY() )
 	{
 		return false;
 	}

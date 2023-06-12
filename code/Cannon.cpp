@@ -12,6 +12,7 @@
 //////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
 const Vector2D Cannon::s_Default_BBHalfDiag( 25.f, 25.f );
+const unsigned int Cannon::s_Default_Color = C_Application::s_Color_Blue;
 const float Cannon::s_Default_OffsetFromBottom = 50.f;
 const float Cannon::s_Default_AngularVelocity = 1.5f;
 const float Cannon::s_Default_BurstFireDelay = 0.05f;
@@ -21,9 +22,8 @@ const float Cannon::s_Default_RotationAngleMax = Vector2D::s_PI;
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
 Cannon::Cannon( C_Application* owner )
-	: Entity( owner, C_Application::s_Color_Blue, s_Default_BBHalfDiag,	
-		owner ? Vector2D( owner->GetScreenWidth() / 2.f, owner->GetScreenHeight() - s_Default_OffsetFromBottom ) : 
-			Vector2D::s_Zero )
+	: Entity( owner, s_Default_Color, s_Default_BBHalfDiag,	owner ? Vector2D( owner->GetScreenWidth() / 2.f, 
+		owner->GetScreenHeight() - s_Default_OffsetFromBottom ) : Vector2D::s_Zero )
 	, m_AngularVelocity( 0.f )
 	, m_BurstFireDelayTimer( 0.f )
 	, m_IsFiring( false )
