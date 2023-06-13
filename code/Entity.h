@@ -26,7 +26,7 @@ public:
 	};
 
 	Entity( C_Application* owner, const unsigned int color, const Vector2D& halfDiagBB, const Vector2D& position, 
-		const Vector2D& facing = Vector2D::s_Up, const Vector2D& velocity = Vector2D::s_Zero );
+		const Vector2D& facing = Vector2D::s_UP, const Vector2D& velocity = Vector2D::s_ZERO );
 	virtual ~Entity() {}
 
 	virtual void Tick( const float deltaTime );

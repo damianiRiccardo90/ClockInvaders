@@ -9,26 +9,12 @@
 #include "graphics.h"
 #include "Projectile.h"
 
-//////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
-
-const C_Application::T_PressedKey C_Application::s_KeyLeft = 0x01;
-const C_Application::T_PressedKey C_Application::s_KeyUp = 0x02;
-const C_Application::T_PressedKey C_Application::s_KeyRight = 0x04;
-const C_Application::T_PressedKey C_Application::s_KeyDown = 0x08;
-const C_Application::T_PressedKey C_Application::s_KeySpace = 0x10;
-
-const unsigned int C_Application::s_Color_Red = GetRGB( 255, 0, 0 );
-const unsigned int C_Application::s_Color_Green = GetRGB( 0, 255, 0 );
-const unsigned int C_Application::s_Color_Blue = GetRGB( 0, 0, 255 );
-const unsigned int C_Application::s_Color_Black = GetRGB( 0, 0, 0 );
-const unsigned int C_Application::s_Color_White = GetRGB( 255, 255, 255 );
-
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
 C_Application::C_Application( const float screenWidth, const float screenHeight )
 	: m_ScreenWidth( screenWidth )
 	, m_ScreenHeight( screenHeight )
-	, m_ScreenBackgroundColor( s_Color_Black )
+	, m_ScreenBackgroundColor( Color::k_BLACK )
 	, m_DeltaTime( 0 )
 	, m_Cannon( nullptr )
 	, m_Entities()
@@ -36,7 +22,7 @@ C_Application::C_Application( const float screenWidth, const float screenHeight 
 	SpawnStartingEntities();
 }
 
-void C_Application::Tick( const T_PressedKey pressedKeys, const float deltaTime )
+void C_Application::Tick( const unsigned int pressedKeys, const float deltaTime )
 {
 	if ( deltaTime == 0.f ) return;
 
@@ -100,15 +86,15 @@ void C_Application::RequestSpawnEntity( const Entity::Type type, const Vector2D&
 	}
 }
 
-void C_Application::ProcessInput( const T_PressedKey pressedKeys )
+void C_Application::ProcessInput( const unsigned int pressedKeys )
 {
 	if ( !m_Cannon ) return;
 
-	if ( pressedKeys & s_KeyLeft )
+	if ( pressedKeys & Key::k_LEFT )
 	{
 		m_Cannon->SetAngularVelocity( Cannon::s_Default_AngularVelocity );
 	}
-	else if ( pressedKeys & s_KeyRight )
+	else if ( pressedKeys & Key::k_RIGHT )
 	{
 		m_Cannon->SetAngularVelocity( -Cannon::s_Default_AngularVelocity );
 	}
@@ -117,7 +103,7 @@ void C_Application::ProcessInput( const T_PressedKey pressedKeys )
 		m_Cannon->SetAngularVelocity( 0.f );
 	}
 
-	if ( pressedKeys & s_KeySpace )
+	if ( pressedKeys & Key::k_SPACE )
 	{
 		m_Cannon->SetFiring( true );
 	}

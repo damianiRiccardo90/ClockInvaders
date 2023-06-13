@@ -8,6 +8,27 @@
 
 // Local.
 #include "Entity.h"
+#include "graphics.h"
+
+///////////////////////////  C O N S T A N T S  //////////////////////////
+
+namespace Color
+{
+	static const unsigned int k_RED   = GetRGB( 255, 0,   0 );
+	static const unsigned int k_GREEN = GetRGB( 0,   255, 0 );
+	static const unsigned int k_BLUE  = GetRGB( 0,   0,   255 );
+	static const unsigned int k_BLACK = GetRGB( 0,   0,   0 );
+	static const unsigned int k_WHITE = GetRGB( 255, 255, 255 );
+}
+
+namespace Key
+{
+	static const unsigned int k_LEFT  = 0x01;
+	static const unsigned int k_UP    = 0x02;
+	static const unsigned int k_RIGHT = 0x04;
+	static const unsigned int k_DOWN  = 0x08;
+	static const unsigned int k_SPACE = 0x10;
+}
 
 ////////////////  F O R W A R D  D E C L A R A T I O N S  ////////////////
 
@@ -19,38 +40,22 @@ class C_Application
 {
 public:
 	
-	typedef unsigned int T_PressedKey;
-
-	// Keys.
-	static const T_PressedKey s_KeyLeft;
-	static const T_PressedKey s_KeyUp;
-	static const T_PressedKey s_KeyRight;
-	static const T_PressedKey s_KeyDown;
-	static const T_PressedKey s_KeySpace;
-
-	// Colors
-	static const unsigned int s_Color_Red;
-	static const unsigned int s_Color_Green;
-	static const unsigned int s_Color_Blue;
-	static const unsigned int s_Color_Black;
-	static const unsigned int s_Color_White;
-
 	C_Application( const float screenWidth, const float screenHeight );
 	~C_Application() {}
 
 	// Tick is called on fixed framerate (50fps).
-	void Tick( const T_PressedKey pressedKeys, const float deltaTime );
+	void Tick( const unsigned int pressedKeys, const float deltaTime );
 
 	float GetScreenWidth() const { return m_ScreenWidth; }
 	float GetScreenHeight() const { return m_ScreenHeight; }
 
-	void RequestSpawnEntity( const Entity::Type type, const Vector2D& position = Vector2D::s_Zero, 
-		const Vector2D& facing = Vector2D::s_Up, const Vector2D& velocity = Vector2D::s_Zero );
+	void RequestSpawnEntity( const Entity::Type type, const Vector2D& position = Vector2D::s_ZERO, 
+		const Vector2D& facing = Vector2D::s_UP, const Vector2D& velocity = Vector2D::s_ZERO );
 
 private:
 
 	// Process the input from the keyboard.
-	void ProcessInput( const T_PressedKey pressedKeys );
+	void ProcessInput( const unsigned int pressedKeys );
 	// Check the collision between entities and the screen borders, and handle them.
 	void CheckEntityCollisions();
 	// Make all the entities "tick".

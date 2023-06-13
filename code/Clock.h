@@ -26,8 +26,8 @@ public:
 	static const float s_Default_HoursAngleSpan;
 	static const float s_Default_MinutesAngleSpan;
 
-	explicit Clock( C_Application* owner, const Vector2D& position = Vector2D::s_Zero, 
-		const Vector2D& velocity = Vector2D::s_Zero );
+	explicit Clock( C_Application* owner, const Vector2D& position = Vector2D::s_ZERO, 
+		const Vector2D& velocity = Vector2D::s_ZERO );
 
 	// Draw the clock.
 	virtual void Render() override;

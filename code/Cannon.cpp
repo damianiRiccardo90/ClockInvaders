@@ -9,21 +9,22 @@
 #include "Projectile.h"
 #include "Vector2D.h"
 
-//////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
+///////////////////////////  C O N S T A N T S  //////////////////////////
 
-const Vector2D Cannon::s_Default_BBHalfDiag( 25.f, 25.f );
-const unsigned int Cannon::s_Default_Color = C_Application::s_Color_Blue;
-const float Cannon::s_Default_OffsetFromBottom = 50.f;
-const float Cannon::s_Default_AngularVelocity = 1.5f;
-const float Cannon::s_Default_BurstFireDelay = 0.05f;
-const float Cannon::s_Default_RotationAngleMin = 0.f;
-const float Cannon::s_Default_RotationAngleMax = Vector2D::s_PI;
+static const Vector2D k_CANNON_DEFAULT_BBHALFDIAG = Vector2D( 25.f, 25.f );
+static const unsigned int k_CANNON_DEFAULT_COLOR = Color::k_BLUE;
+static const float k_CANNON_DEFAULT_OFFSETFROMBOTTOM = 50.f;
+static const float k_CANNON_DEFAULT_ANGULARVELOCITY = 1.5f;
+static const float k_CANNON_DEFAULT_BURSTFIREDELAY = 0.05f;
+static const float k_CANNON_DEFAULT_MINROTATIONANGLE = 0.f;
+static const float k_CANNON_DEFAULT_MAXROTATIONANGLE = k_PI;
 
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
 Cannon::Cannon( C_Application* owner )
-	: Entity( owner, s_Default_Color, s_Default_BBHalfDiag,	owner ? Vector2D( owner->GetScreenWidth() / 2.f, 
-		owner->GetScreenHeight() - s_Default_OffsetFromBottom ) : Vector2D::s_Zero )
+	: Entity( owner, k_CANNON_DEFAULT_COLOR, k_CANNON_DEFAULT_BBHALFDIAG, owner ? 
+		Vector2D( owner->GetScreenWidth() / 2.f, owner->GetScreenHeight() - k_CANNON_DEFAULT_OFFSETFROMBOTTOM ) : 
+		Vector2D::s_ZERO )
 	, m_AngularVelocity( 0.f )
 	, m_BurstFireDelayTimer( 0.f )
 	, m_IsFiring( false )
@@ -36,7 +37,7 @@ void Cannon::Tick( const float deltaTime )
 	if ( m_AngularVelocity )
 	{
 		m_Facing.ClampRotate( m_AngularVelocity * deltaTime, 
-			s_Default_RotationAngleMin, s_Default_RotationAngleMax );
+			k_CANNON_DEFAULT_MINROTATIONANGLE, k_CANNON_DEFAULT_MAXROTATIONANGLE );
 	}
 
 	if ( m_IsFiring )
@@ -47,10 +48,10 @@ void Cannon::Tick( const float deltaTime )
 
 void Cannon::Render()
 {
-	const float rotationAngle = 2 * Vector2D::s_PI / 3; // 120 degrees in radians
+	const float rotationAngle = 2 * k_PI / 3; // 120 degrees in radians
 
 	// Scaling the facing vector by the BB radius.
-	Vector2D radius = m_Facing * s_Default_BBHalfDiag.GetX();
+	Vector2D radius = m_Facing * k_CANNON_DEFAULT_BBHALFDIAG.GetX();
 
 	const Vector2D vertex1 = m_Position + radius;
 
@@ -76,7 +77,7 @@ void Cannon::SetFiring( const bool enable )
 	if ( enable )
 	{
 		// Reset the timer.
-		m_BurstFireDelayTimer = s_Default_BurstFireDelay;
+		m_BurstFireDelayTimer = k_CANNON_DEFAULT_BURSTFIREDELAY;
 	}
 
 	m_IsFiring = enable;
@@ -89,7 +90,7 @@ void Cannon::UpdateFiring( const float deltaTime )
 		Fire();
 
 		// Reset the timer.
-		m_BurstFireDelayTimer = s_Default_BurstFireDelay;
+		m_BurstFireDelayTimer = k_CANNON_DEFAULT_BURSTFIREDELAY;
 	}
 	else
 	{
@@ -102,9 +103,9 @@ void Cannon::Fire()
 	if ( !m_Owner ) return;
 
 	// Get muzzle position.
-	const Vector2D muzzlePos = m_Position + m_Facing * s_Default_BBHalfDiag.GetX();
+	const Vector2D muzzlePos = m_Position + m_Facing * k_CANNON_DEFAULT_BBHALFDIAG.GetX();
 	// Get projectile center.
-	const Vector2D projPos = muzzlePos + m_Facing * Projectile::s_Default_HalfLength;
+	const Vector2D projPos = muzzlePos + m_Facing * k_PROJECTILE_DEFAULT_HALFLENGTH;
 
 	m_Owner->RequestSpawnEntity( Entity::Type::PROJECTILE, projPos, m_Facing );
 }

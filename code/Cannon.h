@@ -17,14 +17,6 @@ class Cannon : public Entity
 {
 public:
 
-	static const Vector2D s_Default_BBHalfDiag;
-	static const unsigned int s_Default_Color;
-	static const float s_Default_OffsetFromBottom;
-	static const float s_Default_AngularVelocity;
-	static const float s_Default_BurstFireDelay;
-	static const float s_Default_RotationAngleMin;
-	static const float s_Default_RotationAngleMax;
-
 	explicit Cannon( C_Application* owner );
 
 	virtual void Tick( const float deltaTime ) override;

@@ -5,6 +5,10 @@
 // Local.
 #include "Entity.h"
 
+///////////////////////////  C O N S T A N T S  //////////////////////////
+
+static const float k_PROJECTILE_DEFAULT_HALFLENGTH = 3.f;
+
 ////////////////  F O R W A R D  D E C L A R A T I O N S  ////////////////
 
 class C_Application;
@@ -15,10 +19,6 @@ class C_Application;
 class Projectile : public Entity
 {
 public:
-
-	static const float s_Default_HalfLength;
-	static const unsigned int s_Default_Color;
-	static const float s_Default_Velocity;
 
 	Projectile( C_Application* owner, const Vector2D& position, const Vector2D& facing );
 

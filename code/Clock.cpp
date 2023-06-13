@@ -12,25 +12,25 @@
 #include "time.h"
 #include "Vector2D.h"
 
-//////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
+///////////////////////////  C O N S T A N T S  //////////////////////////
 
-const Vector2D Clock::s_Default_BBHalfDiag = Vector2D( 50.f, 50.f );
-const Vector2D Clock::s_Default_MinSize = Vector2D( 2.5f, 2.5f );
-const unsigned int Clock::s_Default_Color = C_Application::s_Color_Red;
-const unsigned int Clock::s_Default_HoursHandColor = C_Application::s_Color_White;
-const unsigned int Clock::s_Default_MinutesHandColor = C_Application::s_Color_Blue;
-const float Clock::s_Default_MinVelocity = 50.f;
-const float Clock::s_Default_MaxVelocity = 200.f;
-const float Clock::s_Default_HoursAngleSpan = Vector2D::s_PI / 12;
-const float Clock::s_Default_MinutesAngleSpan = Vector2D::s_PI / 60;
+static const Vector2D k_CLOCK_DEFAULT_BBHALFDIAG = Vector2D( 50.f, 50.f );
+static const Vector2D k_CLOCK_DEFAULT_MINSIZE = Vector2D( 2.5f, 2.5f );
+static const unsigned int k_CLOCK_DEFAULT_COLOR = Color::k_RED;
+static const unsigned int k_CLOCK_DEFAULT_HOURSHANDCOLOR = Color::k_WHITE;
+static const unsigned int k_CLOCK_DEFAULT_MINUTESHANDCOLOR = Color::k_BLUE;
+static const float k_CLOCK_DEFAULT_MINVELOCITY = 50.f;
+static const float k_CLOCK_DEFAULT_MAXVELOCITY = 200.f;
+static const float k_CLOCK_DEFAULT_HOURSANGLESPAN = k_PI / 12;
+static const float k_CLOCK_DEFAULT_MINUTESANGLESPAN = k_PI / 60;
 
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
 Clock::Clock( C_Application* owner, const Vector2D& position /*= Vector2D::s_Zero*/, 
 	const Vector2D& velocity /*= Vector2D::s_Zero*/ )
-	: Entity( owner, C_Application::s_Color_Red, s_Default_BBHalfDiag, position, Vector2D::s_Up, velocity )
+	: Entity( owner, k_CLOCK_DEFAULT_COLOR, k_CLOCK_DEFAULT_BBHALFDIAG, position, Vector2D::s_UP, velocity )
 {
-	if ( m_Position == Vector2D::s_Zero && m_Velocity == Vector2D::s_Zero )
+	if ( m_Position == Vector2D::s_ZERO && m_Velocity == Vector2D::s_ZERO )
 	{
 		Randomize();
 	}
@@ -40,10 +40,10 @@ void Clock::Render()
 {
 	// Draw the external box containing the clock.
 
-	const Vector2D upLtVt = m_Position + Vector2D( -s_Default_BBHalfDiag.GetX(), -s_Default_BBHalfDiag.GetY() );
-	const Vector2D lowLtVt = m_Position + Vector2D( -s_Default_BBHalfDiag.GetX(), s_Default_BBHalfDiag.GetY() );
-	const Vector2D lowRtVt = m_Position + Vector2D( s_Default_BBHalfDiag.GetX(), s_Default_BBHalfDiag.GetY() );
-	const Vector2D upRtVt = m_Position + Vector2D( s_Default_BBHalfDiag.GetX(), -s_Default_BBHalfDiag.GetY() );
+	const Vector2D upLtVt = m_Position + Vector2D( -m_BBHalfDiagonal.GetX(), -m_BBHalfDiagonal.GetY() );
+	const Vector2D lowLtVt = m_Position + Vector2D( -m_BBHalfDiagonal.GetX(), m_BBHalfDiagonal.GetY() );
+	const Vector2D lowRtVt = m_Position + Vector2D( m_BBHalfDiagonal.GetX(), m_BBHalfDiagonal.GetY() );
+	const Vector2D upRtVt = m_Position + Vector2D( m_BBHalfDiagonal.GetX(), -m_BBHalfDiagonal.GetY() );
 
 	const int xUpLtVt = static_cast< int >( upLtVt.GetX() );
 	const int yUpLtVt = static_cast< int >( upLtVt.GetY() );
@@ -66,11 +66,11 @@ void Clock::Render()
 	int currSeconds;
 	GetTime( currHours, currMinutes, currSeconds );
 
-	Vector2D hoursHandDir = Vector2D::s_Up;
+	Vector2D hoursHandDir = Vector2D::s_UP;
 	hoursHandDir.Rotate( -( currHours * s_Default_HoursAngleSpan ) );
 	const Vector2D hoursHandPos = m_Position + hoursHandDir * s_Default_BBHalfDiag.GetX() / 2;
 
-	Vector2D minutesHandDir = Vector2D::s_Up;
+	Vector2D minutesHandDir = Vector2D::s_UP;
 	minutesHandDir.Rotate( -( currMinutes * s_Default_MinutesAngleSpan ) );
 	const Vector2D minutesHandPos = m_Position + minutesHandDir * s_Default_BBHalfDiag.GetX();
 
@@ -112,7 +112,7 @@ void Clock::Randomize()
 	// Set a velocity vector that has a random rotation and a random magnitude chosen within the default range.
 	const float randomVelocityMagnitude = GetRandomNumber( s_Default_MinVelocity, s_Default_MaxVelocity );
 	const float randomRotation = GetRandomNumber( 0.f, 2 * Vector2D::s_PI );
-	Vector2D randomVelocity = Vector2D::s_Up;
+	Vector2D randomVelocity = Vector2D::s_UP;
 	randomVelocity.Rotate( randomRotation ) *= randomVelocityMagnitude;
 	SetVelocity( randomVelocity );
 }

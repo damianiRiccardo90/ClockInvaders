@@ -9,12 +9,11 @@
 
 //////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
-const float Vector2D::s_PI = 3.1415926536f;
-const Vector2D Vector2D::s_Up( 0.f, -1.f );
-const Vector2D Vector2D::s_Down( 0.f, 1.f );
-const Vector2D Vector2D::s_Left( -1.f, 0.f );
-const Vector2D Vector2D::s_Right( 1.f, 0.f );
-const Vector2D Vector2D::s_Zero( 0.f, 0.f );
+const Vector2D Vector2D::s_UP( 0.f, -1.f );
+const Vector2D Vector2D::s_DOWN( 0.f, 1.f );
+const Vector2D Vector2D::s_LEFT( -1.f, 0.f );
+const Vector2D Vector2D::s_RIGHT( 1.f, 0.f );
+const Vector2D Vector2D::s_ZERO( 0.f, 0.f );
 
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
@@ -166,7 +165,7 @@ float Vector2D::GetRotation() const
 	// range [0, 2PI].
 	if ( rotation < 0.f )
 	{ 
-		rotation += 2 * s_PI;
+		rotation += 2 * k_PI;
 	}
 
 	return rotation;
