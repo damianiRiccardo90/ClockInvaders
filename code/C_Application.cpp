@@ -5,6 +5,7 @@
 
 // Local.
 #include "Cannon.h"
+#include "Clock.h"
 #include "graphics.h"
 #include "Projectile.h"
 
@@ -57,8 +58,8 @@ void C_Application::Tick( const T_PressedKey pressedKeys, const float deltaTime 
 	CheckEntityDestruction();
 }
 
-void C_Application::RequestSpawnEntity( const Entity::Type type, const Vector2D& pos /*= Vector2D::s_Zero*/, 
-	const Vector2D& facing /*= Vector2D::s_Up */ )
+void C_Application::RequestSpawnEntity( const Entity::Type type, const Vector2D& position /*= Vector2D::s_Zero*/, 
+	const Vector2D& facing /*= Vector2D::s_Up*/, const Vector2D& velocity /*= Vector2D::s_Zero*/ )
 {
 	switch ( type )
 	{
@@ -79,7 +80,17 @@ void C_Application::RequestSpawnEntity( const Entity::Type type, const Vector2D&
 
 		case Entity::Type::PROJECTILE:
 		{
-			std::unique_ptr< Entity > projectileUniquePtr = std::make_unique< Projectile >( this, pos, facing );
+			std::unique_ptr< Entity > projectileUniquePtr = 
+				std::make_unique< Projectile >( this, position, facing );
+			m_ToBeSpawnedEntities.push_back( std::move( projectileUniquePtr ) );
+
+			break;
+		}
+
+		case Entity::Type::CLOCK:
+		{
+			std::unique_ptr< Entity > projectileUniquePtr = 
+				std::make_unique< Clock >( this, position, velocity );
 			m_ToBeSpawnedEntities.push_back( std::move( projectileUniquePtr ) );
 
 			break;
@@ -203,4 +214,8 @@ void C_Application::SpawnStartingEntities()
 {
 	// Spawning the cannon
 	RequestSpawnEntity( Entity::Type::CANNON );
+
+	// Spawning the first two clocks randomly.
+	RequestSpawnEntity( Entity::Type::CLOCK );
+	RequestSpawnEntity( Entity::Type::CLOCK );
 }

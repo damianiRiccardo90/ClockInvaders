@@ -10,26 +10,20 @@
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
 Entity::Entity( C_Application* owner, const unsigned int color, const Vector2D& halfDiagBB, 
-	const Vector2D& pos, const Vector2D& facing /*= Vector2D::s_Up*/, const Vector2D& vel /*= Vector2D::s_Zero */ )
+	const Vector2D& position, const Vector2D& facing /*= Vector2D::s_Up*/, 
+	const Vector2D& velocity /*= Vector2D::s_Zero*/ )
 	: m_Owner( owner )
 	, m_Color( color )
 	, m_BBHalfDiagonal( halfDiagBB.Abs() )
-	, m_Position( pos )
+	, m_Position( position )
 	, m_Facing( facing )
-	, m_Velocity( vel )
+	, m_Velocity( velocity )
 	, m_IsPendingDestruction( false )
 {}
 
 void Entity::Tick( const float deltaTime )
 {
-	// TODO: This might be wrapped inside and UpdatePosition() function.
-	// Update the position using the velocity vector, scaled by the frame time.
-	m_Position += ( m_Velocity * deltaTime );
-	
-	ClampPosition();
-
-	// TODO: This might be wrapped inside and UpdateVelocity() function.
-	// TODO: Implement (and call here) a function IsCollidingWithScreenEdge() and bounce from the edge.
+	UpdatePosition( deltaTime );
 }
 
 bool Entity::IsCollidingWith( const Entity& other ) const
@@ -68,6 +62,11 @@ bool Entity::IsCollidingWith( const Entity& other ) const
 
 bool Entity::IsCollidingWithScreenBorders() const
 {
+	return IsCollidingWithScreenHorizontally() || IsCollidingWithScreenVertically();
+}
+
+bool Entity::IsCollidingWithScreenHorizontally() const
+{
 	if ( !m_Owner ) return false;
 
 	const float xBBDiag = m_BBHalfDiagonal.GetX();
@@ -76,8 +75,12 @@ bool Entity::IsCollidingWithScreenBorders() const
 	const float xMax = screenWidth - xBBDiag;
 	const float xPos = m_Position.GetX();
 
-	const bool isCollidingHorizontally = ( xPos + xBBDiag >= xMax ) || ( xPos - xBBDiag <= xMin );
-	if ( isCollidingHorizontally ) return true;
+	return ( xPos >= xMax ) || ( xPos <= xMin );
+}
+
+bool Entity::IsCollidingWithScreenVertically() const
+{
+	if ( !m_Owner ) return false;
 
 	const float yBBDiag = m_BBHalfDiagonal.GetY();
 	const float screenHeight = m_Owner->GetScreenHeight();
@@ -85,10 +88,15 @@ bool Entity::IsCollidingWithScreenBorders() const
 	const float yMax = screenHeight - yBBDiag;
 	const float yPos = m_Position.GetY();
 
-	const bool isCollidingVertically = ( yPos + yBBDiag >= yMax ) || ( yPos - yBBDiag <= yMin );
-	if ( isCollidingVertically ) return true;
+	return ( yPos >= yMax ) || ( yPos <= yMin );
+}
 
-	return false;
+void Entity::UpdatePosition( const float deltaTime )
+{
+	// Update the position using the velocity vector, scaled by the frame time.
+	m_Position += ( m_Velocity * deltaTime );
+
+	ClampPosition();
 }
 
 void Entity::ClampPosition()

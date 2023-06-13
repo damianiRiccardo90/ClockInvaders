@@ -86,7 +86,7 @@ void Cannon::UpdateFiring( const float deltaTime )
 {
 	if ( m_BurstFireDelayTimer <= 0.f )
 	{
-		DoFire();
+		Fire();
 
 		// Reset the timer.
 		m_BurstFireDelayTimer = s_Default_BurstFireDelay;
@@ -97,7 +97,7 @@ void Cannon::UpdateFiring( const float deltaTime )
 	}
 }
 
-void Cannon::DoFire()
+void Cannon::Fire()
 {
 	if ( !m_Owner ) return;
 

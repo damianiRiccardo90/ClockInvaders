@@ -20,12 +20,13 @@ public:
 	{
 		CANNON,
 		PROJECTILE,
+		CLOCK,
 
 		INVALID,
 	};
 
-	Entity( C_Application* owner, const unsigned int color, const Vector2D& halfDiagBB, const Vector2D& pos, 
-		const Vector2D& facing = Vector2D::s_Up, const Vector2D& vel = Vector2D::s_Zero );
+	Entity( C_Application* owner, const unsigned int color, const Vector2D& halfDiagBB, const Vector2D& position, 
+		const Vector2D& facing = Vector2D::s_Up, const Vector2D& velocity = Vector2D::s_Zero );
 	virtual ~Entity() {}
 
 	virtual void Tick( const float deltaTime );
@@ -35,6 +36,8 @@ public:
 	virtual bool IsCollidingWith( const Entity& other ) const;
 	virtual void HandleCollision( const Entity& other ) {}
 	virtual bool IsCollidingWithScreenBorders() const;
+	virtual bool IsCollidingWithScreenHorizontally() const;
+	virtual bool IsCollidingWithScreenVertically() const;
 	virtual void HandleScreenBordersCollision() {}
 
 	void SetPosition( const Vector2D& pos ) { m_Position = pos; }
@@ -49,6 +52,8 @@ public:
 
 protected:
 
+	// Position handling.
+	void UpdatePosition( const float deltaTime );
 	// Avoids going outside of the screen boundaries.
 	void ClampPosition();
 

@@ -15,13 +15,13 @@ const float Projectile::s_Default_Velocity = 150.f;
 
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
-Projectile::Projectile( C_Application* owner, const Vector2D& pos, const Vector2D& facing )
+Projectile::Projectile( C_Application* owner, const Vector2D& position, const Vector2D& facing )
 	// The BB is a rectangle that has the projectile (which is just a line) as its diagonal, so to find the vector
 	// that goes from the center to the lower right vertex of the BB, I need to take the line direction, retrieve 
 	// its absolute value (so that it points in the right direction no matter the rotation applied) and then scale 
 	// it using half the total length of the line (which represents a projectile). I'm assuming the facing vector
 	// is already normalized.
-	: Entity( owner, s_Default_Color, Vector2D( facing.Abs() * s_Default_HalfLength ), pos,	facing, 
+	: Entity( owner, s_Default_Color, Vector2D( facing.Abs() * s_Default_HalfLength ), position, facing,
 		facing * s_Default_Velocity )
 {}
 

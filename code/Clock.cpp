@@ -15,6 +15,7 @@
 //////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
 const Vector2D Clock::s_Default_BBHalfDiag = Vector2D( 50.f, 50.f );
+const Vector2D Clock::s_Default_MinSize = Vector2D( 2.5f, 2.5f );
 const unsigned int Clock::s_Default_Color = C_Application::s_Color_Red;
 const unsigned int Clock::s_Default_HoursHandColor = C_Application::s_Color_White;
 const unsigned int Clock::s_Default_MinutesHandColor = C_Application::s_Color_Blue;
@@ -25,9 +26,15 @@ const float Clock::s_Default_MinutesAngleSpan = Vector2D::s_PI / 60;
 
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
-Clock::Clock( C_Application* owner )
-	: Entity( owner, C_Application::s_Color_Red, s_Default_BBHalfDiag, Vector2D::s_Zero )
-{}
+Clock::Clock( C_Application* owner, const Vector2D& position /*= Vector2D::s_Zero*/, 
+	const Vector2D& velocity /*= Vector2D::s_Zero*/ )
+	: Entity( owner, C_Application::s_Color_Red, s_Default_BBHalfDiag, position, Vector2D::s_Up, velocity )
+{
+	if ( m_Position == Vector2D::s_Zero && m_Velocity == Vector2D::s_Zero )
+	{
+		Randomize();
+	}
+}
 
 void Clock::Render()
 {
@@ -75,6 +82,21 @@ void Clock::Render()
 	const int yMinutesHand = static_cast< int >( minutesHandPos.GetY() );
 	DrawLine( xPos, yPos, xHoursHand, yHoursHand, s_Default_HoursHandColor );
 	DrawLine( xPos, yPos, xMinutesHand, yMinutesHand, s_Default_MinutesHandColor );
+}
+
+void Clock::HandleScreenBordersCollision()
+{
+	// When the screen borders are hit, invert the corresponding coordinate of the velocity vector.
+
+	if ( IsCollidingWithScreenHorizontally() )
+	{
+		m_Velocity.SetX( -m_Velocity.GetX() );
+	}
+
+	if ( IsCollidingWithScreenVertically() )
+	{
+		m_Velocity.SetY( -m_Velocity.GetY() );
+	}
 }
 
 void Clock::Randomize()

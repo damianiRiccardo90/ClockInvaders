@@ -44,8 +44,8 @@ public:
 	float GetScreenWidth() const { return m_ScreenWidth; }
 	float GetScreenHeight() const { return m_ScreenHeight; }
 
-	void RequestSpawnEntity( const Entity::Type type, const Vector2D& pos = Vector2D::s_Zero, 
-		const Vector2D& facing = Vector2D::s_Up );
+	void RequestSpawnEntity( const Entity::Type type, const Vector2D& position = Vector2D::s_Zero, 
+		const Vector2D& facing = Vector2D::s_Up, const Vector2D& velocity = Vector2D::s_Zero );
 
 private:
 

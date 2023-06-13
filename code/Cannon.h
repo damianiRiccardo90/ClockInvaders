@@ -31,6 +31,7 @@ public:
 	// Draw an equilateral triangle.
 	virtual void Render() override;
 
+	// Collisions handling.
 	// No entity can collide with the cannon.
 	virtual bool IsCollidingWith( const Entity& other ) const override { return false; }
 	// This entity's position is fixed so it makes no sense to check if it collides with the screen borders.
@@ -46,7 +47,7 @@ private:
 	// Handle firing.
 	void UpdateFiring( const float deltaTime );
 	// Fire a projectile.
-	void DoFire();
+	void Fire();
 
 	float m_AngularVelocity;
 	float m_BurstFireDelayTimer;

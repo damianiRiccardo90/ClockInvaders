@@ -20,10 +20,12 @@ public:
 	static const unsigned int s_Default_Color;
 	static const float s_Default_Velocity;
 
-	Projectile( C_Application* owner, const Vector2D& pos, const Vector2D& facing );
+	Projectile( C_Application* owner, const Vector2D& position, const Vector2D& facing );
 
 	// Draw a line.
 	virtual void Render() override;
+
+	// Collisions handling.
 	// Destroy the projectile when it hits the screen borders.
 	virtual void HandleScreenBordersCollision() override;
 };
