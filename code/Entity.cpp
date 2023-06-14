@@ -91,6 +91,27 @@ bool Entity::IsCollidingWithScreenVertically() const
 	return ( yPos >= yMax ) || ( yPos <= yMin );
 }
 
+void Entity::RenderBB()
+{
+	const Vector2D upLtVt = m_Position + Vector2D( -m_BBHalfDiagonal.GetX(), -m_BBHalfDiagonal.GetY() );
+	const Vector2D lowLtVt = m_Position + Vector2D( -m_BBHalfDiagonal.GetX(), m_BBHalfDiagonal.GetY() );
+	const Vector2D lowRtVt = m_Position + Vector2D( m_BBHalfDiagonal.GetX(), m_BBHalfDiagonal.GetY() );
+	const Vector2D upRtVt = m_Position + Vector2D( m_BBHalfDiagonal.GetX(), -m_BBHalfDiagonal.GetY() );
+
+	const int xUpLtVt = static_cast<int>( upLtVt.GetX() );
+	const int yUpLtVt = static_cast<int>( upLtVt.GetY() );
+	const int xLowLtVt = static_cast<int>( lowLtVt.GetX() );
+	const int yLowLtVt = static_cast<int>( lowLtVt.GetY() );
+	const int xLowRtVt = static_cast<int>( lowRtVt.GetX() );
+	const int yLowRtVt = static_cast<int>( lowRtVt.GetY() );
+	const int xUpRtVt = static_cast<int>( upRtVt.GetX() );
+	const int yUpRtVt = static_cast<int>( upRtVt.GetY() );
+	DrawLine( xUpLtVt, yUpLtVt, xLowLtVt, yLowLtVt, Color::k_GREEN );
+	DrawLine( xLowLtVt, yLowLtVt, xLowRtVt, yLowRtVt, Color::k_GREEN );
+	DrawLine( xLowRtVt, yLowRtVt, xUpRtVt, yUpRtVt, Color::k_GREEN );
+	DrawLine( xUpRtVt, yUpRtVt, xUpLtVt, yUpLtVt, Color::k_GREEN );
+}
+
 void Entity::UpdatePosition( const float deltaTime )
 {
 	// Update the position using the velocity vector, scaled by the frame time.
