@@ -50,9 +50,9 @@ bool Entity::IsCollidingWith( const Entity& other ) const
 	{
 		return false;
 	}
-
+	
 	// Check if the vertical ranges do not overlap.
-	if ( upLtVt.GetY() < lowRtVtOther.GetY() || upLtVtOther.GetY() < lowRtVt.GetY() )
+	if ( lowRtVt.GetY() < upLtVtOther.GetY() || lowRtVtOther.GetY() < upLtVt.GetY() )
 	{
 		return false;
 	}
