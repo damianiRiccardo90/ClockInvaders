@@ -5,7 +5,6 @@
 
 // Local.
 #include "C_Application.h"
-//#include "Vector2D.h"
 
 //////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
