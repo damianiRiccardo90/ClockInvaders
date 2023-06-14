@@ -138,6 +138,8 @@ void C_Application::UpdateEntities()
 
 void C_Application::SpawnEntities()
 {
+	CheckRestart();
+
 	// Transfer the entities from the to-be-spawned list to the main entity list.
 	for ( auto it = m_ToBeSpawnedEntities.begin(); it != m_ToBeSpawnedEntities.end(); ++it )
 	{
@@ -194,4 +196,12 @@ void C_Application::SpawnStartingEntities()
 	// Spawning the first two clocks randomly.
 	RequestSpawnClock();
 	RequestSpawnClock();
+}
+
+void C_Application::CheckRestart()
+{
+	if ( m_Entities.size() == 1 && m_ToBeSpawnedEntities.empty() )
+	{
+		SpawnStartingEntities();
+	}
 }

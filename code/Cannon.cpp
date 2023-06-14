@@ -14,7 +14,7 @@
 static const Vector2D k_CANNON_DEFAULT_BBHALFDIAG = Vector2D( 25.f, 25.f );
 static const unsigned int k_CANNON_DEFAULT_COLOR = Color::k_BLUE;
 static const float k_CANNON_DEFAULT_OFFSETFROMBOTTOM = 50.f;
-static const float k_CANNON_DEFAULT_BURSTFIREDELAY = 0.05f;
+static const float k_CANNON_DEFAULT_BURSTFIREDELAY = 0.001f;
 static const float k_CANNON_DEFAULT_MINROTATIONANGLE = 0.f;
 static const float k_CANNON_DEFAULT_MAXROTATIONANGLE = k_PI;
 

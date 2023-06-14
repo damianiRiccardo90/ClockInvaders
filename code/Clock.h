@@ -20,16 +20,6 @@ class Clock : public Entity
 {
 public:
 
-	static const Vector2D s_Default_BBHalfDiag;
-	static const Vector2D s_Default_MinSize;
-	static const unsigned int s_Default_Color;
-	static const unsigned int s_Default_HoursHandColor;
-	static const unsigned int s_Default_MinutesHandColor;
-	static const float s_Default_MinVelocity;
-	static const float s_Default_MaxVelocity;
-	static const float s_Default_HoursAngleSpan;
-	static const float s_Default_MinutesAngleSpan;
-
 	explicit Clock( C_Application* owner, const Vector2D& position = Vector2D::s_ZERO, 
 		const Vector2D& velocity = Vector2D::s_ZERO, const Vector2D& halfDiag = k_CLOCK_DEFAULT_BBHALFDIAG );
 

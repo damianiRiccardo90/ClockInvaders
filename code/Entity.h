@@ -41,7 +41,7 @@ public:
 	void Destroy() { m_IsPendingDestruction = true; }
 	bool IsPendingDestruction() const { return m_IsPendingDestruction; }
 
-	// Debugging (I hoped I wouldn't have to come to this, but I was too hopeful, and now I'm hopeless).
+	// Debugging.
 	void RenderBB();
 
 protected:

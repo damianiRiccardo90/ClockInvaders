@@ -11,7 +11,7 @@
 ///////////////////////////  C O N S T A N T S  //////////////////////////
 
 static const unsigned int k_PROJECTILE_DEFAULT_COLOR = Color::k_WHITE;
-static const float k_PROJECTILE_DEFAULT_VELOCITY = 150.f;
+static const float k_PROJECTILE_DEFAULT_VELOCITY = 300.f;
 
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 

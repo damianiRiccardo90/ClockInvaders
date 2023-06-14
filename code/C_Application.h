@@ -31,7 +31,7 @@ namespace Key
 	static const unsigned int k_SPACE = 0x10;
 }
 
-static const bool k_DEBUGGING_ACTIVE = false;
+static const bool k_DEBUGGING_ACTIVE = true;
 
 ////////////////  F O R W A R D  D E C L A R A T I O N S  ////////////////
 
@@ -49,8 +49,8 @@ public:
 	// Tick is called on fixed framerate (50fps).
 	void Tick( const unsigned int pressedKeys, const float deltaTime );
 
-	float GetScreenWidth() const { return m_ScreenWidth; }
-	float GetScreenHeight() const { return m_ScreenHeight; }
+	float GetScreenWidth() const { return static_cast< float >( m_ScreenWidth ); }
+	float GetScreenHeight() const { return static_cast< float >( m_ScreenHeight ); }
 
 	// Spawning requests.
 	void RequestSpawnCannon();
@@ -75,10 +75,12 @@ private:
 
 	void ClearScreen();
 	void SpawnStartingEntities();
+	// Check that there are still clocks on screen, if not, respawns the first two big clocks.
+	void CheckRestart();
 
 	const float m_ScreenWidth;
 	const float m_ScreenHeight;
-	const int m_ScreenBackgroundColor;
+	const unsigned int m_ScreenBackgroundColor;
 
 	float m_DeltaTime;
 

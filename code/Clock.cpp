@@ -100,6 +100,11 @@ void Clock::HandleCollision( Entity* other )
 			Destroy();
 		}
 	}
+	// If hit by another clock, just invert the velocity vector.
+	else if ( Clock* clockPtr = dynamic_cast< Clock* >( other ) )
+	{
+		m_Velocity = -m_Velocity;
+	}
 }
 
 void Clock::HandleScreenBordersCollision()
