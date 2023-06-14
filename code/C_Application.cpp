@@ -96,8 +96,6 @@ void C_Application::ProcessInput( const unsigned int pressedKeys )
 	{
 		m_Cannon->SetFiring( false );
 	}
-
-	// TODO: Implement graceful exit on esc key?
 }
 
 void C_Application::CheckEntityCollisions()

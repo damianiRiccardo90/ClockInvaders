@@ -7,6 +7,10 @@
 #include <algorithm>
 #include <cmath>
 
+///////////////////////////  C O N S T A N T S  //////////////////////////
+
+static const float k_ROTATION_TOLERANCE = 0.001f;
+
 //////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
 const Vector2D Vector2D::s_UP( 0.f, -1.f );
@@ -150,7 +154,7 @@ Vector2D& Vector2D::ClampRotate( const float rad, const float min, const float m
 {
 	const float oldRotation = GetRotation();
 	const float newRotation = oldRotation + rad;
-	const float clampedRotation = std::clamp( newRotation, min, max );
+	float clampedRotation = std::clamp( newRotation, min, max );
 	const float rotationDelta = clampedRotation - oldRotation;
 
 	return Rotate( rotationDelta, origin );
@@ -161,11 +165,15 @@ float Vector2D::GetRotation() const
 	// The std::atan2 function returns the angle in radians within the range[ -PI, PI ], with positive angles in 
 	// the counterclockwise direction.
 	float rotation = std::atan2( -y, x );
-	// If the calculated angle is negative we need to add 2 * PI (a full circle) to bring it within the 
-	// range [0, 2PI].
+	
+	// Wrap the angle around to the range of [ 0, 2PI ].
 	if ( rotation < 0.f )
-	{ 
+	{
 		rotation += 2 * k_PI;
+	}
+	else if ( rotation >= 2 * k_PI )
+	{
+		rotation -= 2 * k_PI;
 	}
 
 	return rotation;
