@@ -3,6 +3,9 @@
 // Header.
 #include "RandomGenerator.h"
 
+// System.
+#include <chrono>
+
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
 RandomGenerator& RandomGenerator::GetInstance()
@@ -24,5 +27,5 @@ bool RandomGenerator::GenerateBool()
 }
 
 RandomGenerator::RandomGenerator() 
-	: m_Generator( std::random_device()( ) )
+	: m_Generator( std::chrono::high_resolution_clock::now().time_since_epoch().count() )
 {}

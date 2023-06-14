@@ -12,8 +12,8 @@
 
 ///////////////////////////  C O N S T A N T S  //////////////////////////
 
-const Vector2D Clock::s_DEFAULT_BBHALFDIAG = Vector2D( 50.f, 50.f );
-const Vector2D Clock::s_DEFAULT_MINHALFDIAG = Vector2D( 2.5f, 2.5f );
+const Vector2D Clock::s_DEFAULT_BBHALFDIAG( 50.f, 50.f );
+const Vector2D Clock::s_DEFAULT_MINHALFDIAG( 2.5f, 2.5f );
 const unsigned int Clock::s_DEFAULT_COLOR = C_Application::GetRed();
 const unsigned int Clock::s_DEFAULT_HOURSHANDCOLOR = C_Application::GetWhite();
 const unsigned int Clock::s_DEFAULT_MINUTESHANDCOLOR = C_Application::GetBlue();
@@ -37,27 +37,25 @@ Clock::Clock( C_Application* owner, const Vector2D& position /*= Vector2D::GetZe
 
 void Clock::Render()
 {
-	Entity::Render();
-
 	// Draw the external box containing the clock.
 
-	const Vector2D upLtVt = m_Position + Vector2D( -m_BBHalfDiagonal.GetX(), -m_BBHalfDiagonal.GetY() );
-	const Vector2D lowLtVt = m_Position + Vector2D( -m_BBHalfDiagonal.GetX(), m_BBHalfDiagonal.GetY() );
-	const Vector2D lowRtVt = m_Position + Vector2D( m_BBHalfDiagonal.GetX(), m_BBHalfDiagonal.GetY() );
-	const Vector2D upRtVt = m_Position + Vector2D( m_BBHalfDiagonal.GetX(), -m_BBHalfDiagonal.GetY() );
+	const Vector2D upperLeftVertex = m_Position + Vector2D( -m_BBHalfDiagonal.GetX(), -m_BBHalfDiagonal.GetY() );
+	const Vector2D lowerLeftVertex = m_Position + Vector2D( -m_BBHalfDiagonal.GetX(), m_BBHalfDiagonal.GetY() );
+	const Vector2D lowerRightVertex = m_Position + Vector2D( m_BBHalfDiagonal.GetX(), m_BBHalfDiagonal.GetY() );
+	const Vector2D upperRightVertex = m_Position + Vector2D( m_BBHalfDiagonal.GetX(), -m_BBHalfDiagonal.GetY() );
 
-	const int xUpLtVt = static_cast< int >( upLtVt.GetX() );
-	const int yUpLtVt = static_cast< int >( upLtVt.GetY() );
-	const int xLowLtVt = static_cast< int >( lowLtVt.GetX() );
-	const int yLowLtVt = static_cast< int >( lowLtVt.GetY() );
-	const int xLowRtVt = static_cast< int >( lowRtVt.GetX() );
-	const int yLowRtVt = static_cast< int >( lowRtVt.GetY() );
-	const int xUpRtVt = static_cast< int >( upRtVt.GetX() );
-	const int yUpRtVt = static_cast< int >( upRtVt.GetY() );
-	DrawLine( xUpLtVt, yUpLtVt, xLowLtVt, yLowLtVt, m_Color );
-	DrawLine( xLowLtVt, yLowLtVt, xLowRtVt, yLowRtVt, m_Color );
-	DrawLine( xLowRtVt, yLowRtVt, xUpRtVt, yUpRtVt, m_Color );
-	DrawLine( xUpRtVt, yUpRtVt, xUpLtVt, yUpLtVt, m_Color );
+	const int xUpperLeftVertex = static_cast< int >( upperLeftVertex.GetX() );
+	const int yUpperLeftVertex = static_cast< int >( upperLeftVertex.GetY() );
+	const int xLowerLeftVertex = static_cast< int >( lowerLeftVertex.GetX() );
+	const int yLowerLeftVertex = static_cast< int >( lowerLeftVertex.GetY() );
+	const int xLowerRightVertex = static_cast< int >( lowerRightVertex.GetX() );
+	const int yLowerRightVertex = static_cast< int >( lowerRightVertex.GetY() );
+	const int xUpperRightVertex = static_cast< int >( upperRightVertex.GetX() );
+	const int yUpperRightVertex = static_cast< int >( upperRightVertex.GetY() );
+	DrawLine( xUpperLeftVertex, yUpperLeftVertex, xLowerLeftVertex, yLowerLeftVertex, m_Color );
+	DrawLine( xLowerLeftVertex, yLowerLeftVertex, xLowerRightVertex, yLowerRightVertex, m_Color );
+	DrawLine( xLowerRightVertex, yLowerRightVertex, xUpperRightVertex, yUpperRightVertex, m_Color );
+	DrawLine( xUpperRightVertex, yUpperRightVertex, xUpperLeftVertex, yUpperLeftVertex, m_Color );
 
 	// Draw the internal hands of the clock.
 
@@ -90,7 +88,7 @@ void Clock::HandleCollision( Entity* other )
 	Entity::HandleCollision( other );
 
 	// Split the clock if we're being hit by a projectile, and the current size is higher than the allowed minimum.
-	if ( Projectile* projectilePtr = dynamic_cast< Projectile* >( other ) )
+	if ( typeid( *other ) == typeid( Projectile ) )
 	{
 		if ( m_BBHalfDiagonal.GetX() > s_DEFAULT_MINHALFDIAG.GetX() || 
 			m_BBHalfDiagonal.GetY() > s_DEFAULT_MINHALFDIAG.GetY() )
@@ -103,7 +101,7 @@ void Clock::HandleCollision( Entity* other )
 		}
 	}
 	// If hit by another clock, just invert the velocity vector.
-	else if ( Clock* clockPtr = dynamic_cast< Clock* >( other ) )
+	else if ( typeid( *other ) == typeid( Clock ) )
 	{
 		m_Velocity = -m_Velocity;
 	}

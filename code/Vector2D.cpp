@@ -159,7 +159,7 @@ bool Vector2D::operator!=( const Vector2D& other ) const
 	return x != other.x || y != other.y;
 }
 
-Vector2D& Vector2D::Rotate( const float rad, const Vector2D origin /*= s_Zero*/)
+Vector2D& Vector2D::Rotate( const float rad, const Vector2D& origin /*= s_Zero*/)
 {
 	// Negating the input radians will result in counter-clockwise rotation when rad is positive.
 	const float sin = std::sin( -rad );
@@ -178,7 +178,7 @@ Vector2D& Vector2D::Rotate( const float rad, const Vector2D origin /*= s_Zero*/)
 }
 
 Vector2D& Vector2D::ClampRotate( const float rad, const float min, const float max, 
-	const Vector2D origin /*= s_Zero*/ )
+	const Vector2D& origin /*= s_Zero*/ )
 {
 	const float oldRotation = GetRotation();
 	const float newRotation = oldRotation + rad;
@@ -202,6 +202,15 @@ float Vector2D::GetRotation() const
 	else if ( rotation >= 2 * GetPI() )
 	{
 		rotation -= 2 * GetPI();
+	}
+
+	if ( rotation < s_ROTATION_TOLERANCE )
+	{
+		rotation = 0.f;
+	}
+	else if ( std::abs( rotation - 2 * GetPI() ) < s_ROTATION_TOLERANCE )
+	{
+		rotation = 2 * GetPI();
 	}
 
 	return rotation;

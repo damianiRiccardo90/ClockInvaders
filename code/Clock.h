@@ -5,10 +5,6 @@
 // Local.
 #include "Entity.h"
 
-///////////////////////////  C O N S T A N T S  //////////////////////////
-
-static const Vector2D k_CLOCK_DEFAULT_BBHALFDIAG = Vector2D( 50.f, 50.f );
-
 ////////////////  F O R W A R D  D E C L A R A T I O N S  ////////////////
 
 class C_Application;

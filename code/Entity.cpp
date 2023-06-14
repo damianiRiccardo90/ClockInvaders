@@ -7,11 +7,6 @@
 #include "C_Application.h"
 #include "graphics.h"
 
-//////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
-
-const bool Entity::s_DEBUGGING_ACTIVE = false;
-const unsigned int Entity::s_DEBUGGING_COLOR = C_Application::GetGreen();
-
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
 Entity::Entity( C_Application* owner, const unsigned int color, const Vector2D& halfDiagBB, 
@@ -29,14 +24,6 @@ Entity::Entity( C_Application* owner, const unsigned int color, const Vector2D& 
 void Entity::Tick( const float deltaTime )
 {
 	UpdatePosition( deltaTime );
-}
-
-void Entity::Render()
-{
-	if ( s_DEBUGGING_ACTIVE )
-	{
-		RenderBB();
-	}
 }
 
 bool Entity::IsCollidingWith( const Entity& other ) const
@@ -82,27 +69,6 @@ bool Entity::IsCollidingWithScreenVertically() const
 	return ( yPos >= yMax ) || ( yPos <= yMin );
 }
 
-void Entity::RenderBB()
-{
-	const Vector2D upLtVt = m_Position + Vector2D( -m_BBHalfDiagonal.GetX(), -m_BBHalfDiagonal.GetY() );
-	const Vector2D lowLtVt = m_Position + Vector2D( -m_BBHalfDiagonal.GetX(), m_BBHalfDiagonal.GetY() );
-	const Vector2D lowRtVt = m_Position + Vector2D( m_BBHalfDiagonal.GetX(), m_BBHalfDiagonal.GetY() );
-	const Vector2D upRtVt = m_Position + Vector2D( m_BBHalfDiagonal.GetX(), -m_BBHalfDiagonal.GetY() );
-
-	const int xUpLtVt = static_cast<int>( upLtVt.GetX() );
-	const int yUpLtVt = static_cast<int>( upLtVt.GetY() );
-	const int xLowLtVt = static_cast<int>( lowLtVt.GetX() );
-	const int yLowLtVt = static_cast<int>( lowLtVt.GetY() );
-	const int xLowRtVt = static_cast<int>( lowRtVt.GetX() );
-	const int yLowRtVt = static_cast<int>( lowRtVt.GetY() );
-	const int xUpRtVt = static_cast<int>( upRtVt.GetX() );
-	const int yUpRtVt = static_cast<int>( upRtVt.GetY() );
-	DrawLine( xUpLtVt, yUpLtVt, xLowLtVt, yLowLtVt, s_DEBUGGING_COLOR );
-	DrawLine( xLowLtVt, yLowLtVt, xLowRtVt, yLowRtVt, s_DEBUGGING_COLOR );
-	DrawLine( xLowRtVt, yLowRtVt, xUpRtVt, yUpRtVt, s_DEBUGGING_COLOR );
-	DrawLine( xUpRtVt, yUpRtVt, xUpLtVt, yUpLtVt, s_DEBUGGING_COLOR );
-}
-
 void Entity::UpdatePosition( const float deltaTime )
 {
 	// Update the position using the velocity vector, scaled by the frame time.
@@ -141,20 +107,22 @@ bool Entity::IsOverlapping( const Entity& other ) const
 	const float yBBDiagOther = other.m_BBHalfDiagonal.GetY();
 
 	// Lower right vertices (from this Entity, and the other one).
-	const Vector2D lowRtVt = Vector2D( xPos + xBBDiag, yPos + yBBDiag );
-	const Vector2D lowRtVtOther = Vector2D( xPosOther + xBBDiagOther, yPosOther + yBBDiagOther );
+	const Vector2D lowerRightVertex = Vector2D( xPos + xBBDiag, yPos + yBBDiag );
+	const Vector2D lowerRightVertexOther = Vector2D( xPosOther + xBBDiagOther, yPosOther + yBBDiagOther );
 	// Upper left vertices (from this Entity, and the other one).
-	const Vector2D upLtVt = Vector2D( xPos - xBBDiag, yPos - yBBDiag );
-	const Vector2D upLtVtOther = Vector2D( xPosOther - xBBDiagOther, yPosOther - yBBDiagOther );
+	const Vector2D upperLeftVertex = Vector2D( xPos - xBBDiag, yPos - yBBDiag );
+	const Vector2D upperLeftVertexOther = Vector2D( xPosOther - xBBDiagOther, yPosOther - yBBDiagOther );
 
 	// Check if the horizontal ranges do not overlap.
-	if ( lowRtVt.GetX() < upLtVtOther.GetX() || lowRtVtOther.GetX() < upLtVt.GetX() )
+	if ( lowerRightVertex.GetX() < upperLeftVertexOther.GetX() || 
+		lowerRightVertexOther.GetX() < upperLeftVertex.GetX() )
 	{
 		return false;
 	}
 
 	// Check if the vertical ranges do not overlap.
-	if ( lowRtVt.GetY() < upLtVtOther.GetY() || lowRtVtOther.GetY() < upLtVt.GetY() )
+	if ( lowerRightVertex.GetY() < upperLeftVertexOther.GetY() || 
+		lowerRightVertexOther.GetY() < upperLeftVertex.GetY() )
 	{
 		return false;
 	}

@@ -21,7 +21,7 @@ public:
 	virtual ~Entity() {}
 
 	virtual void Tick( const float deltaTime );
-	virtual void Render() = 0;
+	virtual void Render() {};
 
 	// Collisions handling.
 	virtual bool IsCollidingWith( const Entity& other ) const;
@@ -41,18 +41,10 @@ public:
 	void Destroy() { m_IsPendingDestruction = true; }
 	bool IsPendingDestruction() const { return m_IsPendingDestruction; }
 
-	// Debugging.
-	void RenderBB();
-
-	static const bool s_DEBUGGING_ACTIVE;
-	static const unsigned int s_DEBUGGING_COLOR;
-
 protected:
 
-	// Position handling.
 	void UpdatePosition( const float deltaTime );
 
-	// Collisions handling.
 	// Avoids going outside of the screen boundaries.
 	void ClampPosition();
 	// Detects overlapping.

@@ -28,8 +28,6 @@ Projectile::Projectile( C_Application* owner, const Vector2D& position, const Ve
 
 void Projectile::Render()
 {
-	Entity::Render();
-
 	const Vector2D lineStart = m_Position - m_Facing * s_DEFAULT_HALFLENGTH;
 	const Vector2D lineEnd = m_Position + m_Facing * s_DEFAULT_HALFLENGTH;
 

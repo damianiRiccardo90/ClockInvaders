@@ -10,7 +10,7 @@
 
 //////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
-const Vector2D Cannon::s_DEFAULT_BBHALFDIAG = Vector2D( 25.f, 25.f );
+const Vector2D Cannon::s_DEFAULT_BBHALFDIAG( 25.f, 25.f );
 const unsigned int Cannon::s_DEFAULT_COLOR = C_Application::GetBlue();
 const float Cannon::s_DEFAULT_OFFSETFROMBOTTOM = 50.f;
 const float Cannon::s_DEFAULT_BURSTFIREDELAY = 0.001f;
@@ -46,8 +46,6 @@ void Cannon::Tick( const float deltaTime )
 
 void Cannon::Render()
 {
-	Entity::Render();
-
 	const float rotationAngle = 2 * Vector2D::GetPI() / 3; // 120 degrees in radians
 
 	// Scaling the facing vector by the BB radius.

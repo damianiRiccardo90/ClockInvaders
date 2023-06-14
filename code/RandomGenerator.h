@@ -20,8 +20,13 @@ public:
 
 private:
 
-	// Private constructor to prevent instantiation
+	// Private constructor to prevent instantiation, and deleted copy and move constructors as the class is 
+	// a singleton.
 	RandomGenerator();
+	RandomGenerator( const RandomGenerator& ) = delete;
+	RandomGenerator& operator=( const RandomGenerator& ) = delete;
+	RandomGenerator( RandomGenerator&& ) = delete;
+	RandomGenerator& operator=( RandomGenerator&& ) = delete;
 
 	std::mt19937 m_Generator;
 };

@@ -40,8 +40,8 @@ public:
 	void SetY( const float newY ) { y = newY; }
 	float GetY() const { return y; }
 
-	Vector2D& Rotate( const float rad, const Vector2D origin = GetZero() );
-	Vector2D& ClampRotate( const float rad, const float min, const float max, const Vector2D origin = GetZero() );
+	Vector2D& Rotate( const float rad, const Vector2D& origin = GetZero() );
+	Vector2D& ClampRotate( const float rad, const float min, const float max, const Vector2D& origin = GetZero() );
 	// Returns the rotation in the range [0, 2PI], rotating counter-clockwise and starting from the s_Right vector.
 	float GetRotation() const;
 	Vector2D Abs() const;

@@ -5,10 +5,6 @@
 // Local.
 #include "Entity.h"
 
-////////////////  F O R W A R D  D E C L A R A T I O N S  ////////////////
-
-class C_Application;
-
 //////////////////  C L A S S  D E C L A R A T I O N S  //////////////////
 
 // The projectile (a line) that the cannon shoots at the enemies (the clocks, basically).
