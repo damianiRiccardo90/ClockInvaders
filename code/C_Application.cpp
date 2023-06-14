@@ -5,7 +5,6 @@
 
 // Local.
 #include "Cannon.h"
-#include "Clock.h"
 #include "graphics.h"
 #include "Projectile.h"
 
@@ -44,46 +43,32 @@ void C_Application::Tick( const unsigned int pressedKeys, const float deltaTime 
 	CheckEntityDestruction();
 }
 
-void C_Application::RequestSpawnEntity( const Entity::Type type, const Vector2D& position /*= Vector2D::s_Zero*/, 
-	const Vector2D& facing /*= Vector2D::s_Up*/, const Vector2D& velocity /*= Vector2D::s_Zero*/ )
+void C_Application::RequestSpawnCannon()
 {
-	switch ( type )
+	// There can be only one.
+	if ( !m_Cannon )
 	{
-		case Entity::Type::CANNON:
-		{
-			// There can be only one.
-			if ( !m_Cannon )
-			{
-				std::unique_ptr< Entity > cannonUniquePtr = std::make_unique< Cannon >( this );
-				// Go straight to the entities vector, without passing through the spawning list.
-				m_Entities.push_back( std::move( cannonUniquePtr ) );
+		std::unique_ptr< Entity > cannonUniquePtr = std::make_unique< Cannon >( this );
+		// Go straight to the entities vector, without passing through the spawning list.
+		m_Entities.push_back( std::move( cannonUniquePtr ) );
 
-				m_Cannon = static_cast< Cannon* >( m_Entities.back().get() );
-			}
-
-			break;
-		}
-
-		case Entity::Type::PROJECTILE:
-		{
-			std::unique_ptr< Entity > projectileUniquePtr = 
-				std::make_unique< Projectile >( this, position, facing );
-			m_ToBeSpawnedEntities.push_back( std::move( projectileUniquePtr ) );
-
-			break;
-		}
-
-		case Entity::Type::CLOCK:
-		{
-			std::unique_ptr< Entity > projectileUniquePtr = 
-				std::make_unique< Clock >( this, position, velocity );
-			m_ToBeSpawnedEntities.push_back( std::move( projectileUniquePtr ) );
-
-			break;
-		}
-
-		default: break;
+		m_Cannon = static_cast<Cannon*>( m_Entities.back().get() );
 	}
+}
+
+void C_Application::RequestSpawnProjectile( const Vector2D& position, const Vector2D& facing )
+{
+	std::unique_ptr< Entity > projectileUniquePtr =
+		std::make_unique< Projectile >( this, position, facing );
+	m_ToBeSpawnedEntities.push_back( std::move( projectileUniquePtr ) );
+}
+
+void C_Application::RequestSpawnClock( const Vector2D& position /*= Vector2D::s_ZERO*/, 
+	const Vector2D& velocity /*= Vector2D::s_ZERO*/, const Vector2D& halfDiag /*= k_CLOCK_DEFAULT_BBHALFDIAG*/ )
+{
+	std::unique_ptr< Entity > projectileUniquePtr =
+		std::make_unique< Clock >( this, position, velocity, halfDiag );
+	m_ToBeSpawnedEntities.push_back( std::move( projectileUniquePtr ) );
 }
 
 void C_Application::ProcessInput( const unsigned int pressedKeys )
@@ -92,11 +77,11 @@ void C_Application::ProcessInput( const unsigned int pressedKeys )
 
 	if ( pressedKeys & Key::k_LEFT )
 	{
-		m_Cannon->SetAngularVelocity( Cannon::s_Default_AngularVelocity );
+		m_Cannon->SetAngularVelocity( k_CANNON_DEFAULT_ANGULARVELOCITY );
 	}
 	else if ( pressedKeys & Key::k_RIGHT )
 	{
-		m_Cannon->SetAngularVelocity( -Cannon::s_Default_AngularVelocity );
+		m_Cannon->SetAngularVelocity( -k_CANNON_DEFAULT_ANGULARVELOCITY );
 	}
 	else
 	{
@@ -135,8 +120,9 @@ void C_Application::CheckEntityCollisions()
 		{
 			if ( ( *it1 )->IsCollidingWith( **it2 ) )
 			{
-				// Handle the collision between entity1 and entity2.
-				( *it1 )->HandleCollision( **it2 );
+				// Handle the collision between entity1 and entity2 (let them handle it themselves, on both sides).
+				( *it1 )->HandleCollision( it2->get() );
+				( *it2 )->HandleCollision( it1->get() );
 			}
 		}
 	}
@@ -199,9 +185,9 @@ void C_Application::ClearScreen()
 void C_Application::SpawnStartingEntities()
 {
 	// Spawning the cannon
-	RequestSpawnEntity( Entity::Type::CANNON );
+	RequestSpawnCannon();
 
 	// Spawning the first two clocks randomly.
-	RequestSpawnEntity( Entity::Type::CLOCK );
-	RequestSpawnEntity( Entity::Type::CLOCK );
+	RequestSpawnClock();
+	RequestSpawnClock();
 }

@@ -5,6 +5,10 @@
 // Local.
 #include "Entity.h"
 
+///////////////////////////  C O N S T A N T S  //////////////////////////
+
+static const float k_CANNON_DEFAULT_ANGULARVELOCITY = 1.5f;
+
 ////////////////  F O R W A R D  D E C L A R A T I O N S  ////////////////
 
 class C_Application;

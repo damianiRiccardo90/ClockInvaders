@@ -9,7 +9,7 @@
 
 // Global variables
 
-C_Application::T_PressedKey g_PressedKeys = 0;
+unsigned int g_PressedKeys = 0;
 
 
 const int k_ScreenWidth  = 800;
@@ -33,11 +33,11 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 	case WM_KEYDOWN:
 		switch(wParam)
 		{
-		case VK_LEFT:  g_PressedKeys |= C_Application::s_KeyLeft;  break;
-		case VK_UP:    g_PressedKeys |= C_Application::s_KeyUp;    break;
-		case VK_RIGHT: g_PressedKeys |= C_Application::s_KeyRight; break;
-		case VK_DOWN:  g_PressedKeys |= C_Application::s_KeyDown;  break;
-		case VK_SPACE: g_PressedKeys |= C_Application::s_KeySpace; break;
+		case VK_LEFT:  g_PressedKeys |= Key::k_LEFT;  break;
+		case VK_UP:    g_PressedKeys |= Key::k_UP;    break;
+		case VK_RIGHT: g_PressedKeys |= Key::k_RIGHT; break;
+		case VK_DOWN:  g_PressedKeys |= Key::k_DOWN;  break;
+		case VK_SPACE: g_PressedKeys |= Key::k_SPACE; break;
 		case VK_ESCAPE:
 			PostQuitMessage(0);
 			break;
@@ -46,11 +46,11 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 	case WM_KEYUP:
 		switch(wParam)
 		{
-		case VK_LEFT:  g_PressedKeys &= ~C_Application::s_KeyLeft;  break;
-		case VK_UP:    g_PressedKeys &= ~C_Application::s_KeyUp;    break;
-		case VK_RIGHT: g_PressedKeys &= ~C_Application::s_KeyRight; break;
-		case VK_DOWN:  g_PressedKeys &= ~C_Application::s_KeyDown;  break;
-		case VK_SPACE: g_PressedKeys &= ~C_Application::s_KeySpace; break;
+		case VK_LEFT:  g_PressedKeys &= ~Key::k_LEFT;  break;
+		case VK_UP:    g_PressedKeys &= ~Key::k_UP;    break;
+		case VK_RIGHT: g_PressedKeys &= ~Key::k_RIGHT; break;
+		case VK_DOWN:  g_PressedKeys &= ~Key::k_DOWN;  break;
+		case VK_SPACE: g_PressedKeys &= ~Key::k_SPACE; break;
 		}
 		break;
 	}

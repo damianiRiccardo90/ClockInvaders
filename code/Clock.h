@@ -5,6 +5,10 @@
 // Local.
 #include "Entity.h"
 
+///////////////////////////  C O N S T A N T S  //////////////////////////
+
+static const Vector2D k_CLOCK_DEFAULT_BBHALFDIAG = Vector2D( 50.f, 50.f );
+
 ////////////////  F O R W A R D  D E C L A R A T I O N S  ////////////////
 
 class C_Application;
@@ -27,12 +31,14 @@ public:
 	static const float s_Default_MinutesAngleSpan;
 
 	explicit Clock( C_Application* owner, const Vector2D& position = Vector2D::s_ZERO, 
-		const Vector2D& velocity = Vector2D::s_ZERO );
+		const Vector2D& velocity = Vector2D::s_ZERO, const Vector2D& halfDiag = k_CLOCK_DEFAULT_BBHALFDIAG );
 
 	// Draw the clock.
 	virtual void Render() override;
 
 	// Collisions handling.
+	// Split the clock if it's hit by a projectile.
+	virtual void HandleCollision( Entity* other ) override;
 	// Bounce off the screen by altering the velocity vector.
 	virtual void HandleScreenBordersCollision() override;
 
@@ -40,6 +46,11 @@ private:
 
 	// Moves the clock to a random position on screen and gives it a random velocity and facing.
 	void Randomize();
-	float GetRandomNumber( const float min, const float max ) const;
+	Vector2D GetRandomPosition() const;
+	Vector2D GetRandomVelocity() const;
+	float GetRandomFloat( const float min, const float max ) const;
+	bool GetRandomBool() const;
+	// Spawn 2 different new clocks, half the size of the current one, and placed side by side diagonally. Then
+	// destroy the current clock.
 	void Split();
 };

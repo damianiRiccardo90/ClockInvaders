@@ -26,6 +26,7 @@ public:
 	virtual void Render() override;
 
 	// Collisions handling.
-	// Destroy the projectile when it hits the screen borders.
+	// Destroy the projectile when it hits the screen borders, or a clock entity.
+	virtual void HandleCollision( Entity* other ) override;
 	virtual void HandleScreenBordersCollision() override;
 };

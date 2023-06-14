@@ -16,15 +16,6 @@ class Entity
 {
 public:
 
-	enum class Type
-	{
-		CANNON,
-		PROJECTILE,
-		CLOCK,
-
-		INVALID,
-	};
-
 	Entity( C_Application* owner, const unsigned int color, const Vector2D& halfDiagBB, const Vector2D& position, 
 		const Vector2D& facing = Vector2D::s_UP, const Vector2D& velocity = Vector2D::s_ZERO );
 	virtual ~Entity() {}
@@ -34,7 +25,7 @@ public:
 
 	// Collisions handling.
 	virtual bool IsCollidingWith( const Entity& other ) const;
-	virtual void HandleCollision( const Entity& other ) {}
+	virtual void HandleCollision( Entity* other ) {}
 	virtual bool IsCollidingWithScreenBorders() const;
 	virtual bool IsCollidingWithScreenHorizontally() const;
 	virtual bool IsCollidingWithScreenVertically() const;

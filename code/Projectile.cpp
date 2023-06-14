@@ -5,6 +5,7 @@
 
 // Local.
 #include "C_Application.h"
+#include "Clock.h"
 #include "graphics.h"
 
 ///////////////////////////  C O N S T A N T S  //////////////////////////
@@ -34,6 +35,14 @@ void Projectile::Render()
 	const int xLineEnd = static_cast< int >( lineEnd.GetX() );
 	const int yLineEnd = static_cast< int >( lineEnd.GetY() );
 	DrawLine( xLineStart, yLineStart, xLineEnd, yLineEnd, m_Color );
+}
+
+void Projectile::HandleCollision( Entity* other )
+{
+	if ( Clock* clockPtr = dynamic_cast< Clock* >( other ) )
+	{
+		Destroy();
+	}
 }
 
 void Projectile::HandleScreenBordersCollision()

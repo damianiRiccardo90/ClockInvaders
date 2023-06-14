@@ -7,6 +7,7 @@
 #include <vector>
 
 // Local.
+#include "Clock.h"
 #include "Entity.h"
 #include "graphics.h"
 
@@ -49,8 +50,11 @@ public:
 	float GetScreenWidth() const { return m_ScreenWidth; }
 	float GetScreenHeight() const { return m_ScreenHeight; }
 
-	void RequestSpawnEntity( const Entity::Type type, const Vector2D& position = Vector2D::s_ZERO, 
-		const Vector2D& facing = Vector2D::s_UP, const Vector2D& velocity = Vector2D::s_ZERO );
+	// Spawning requests.
+	void RequestSpawnCannon();
+	void RequestSpawnProjectile( const Vector2D& position, const Vector2D& facing );
+	void RequestSpawnClock( const Vector2D& position = Vector2D::s_ZERO, 
+		const Vector2D& velocity = Vector2D::s_ZERO, const Vector2D& halfDiag = k_CLOCK_DEFAULT_BBHALFDIAG );
 
 private:
 
