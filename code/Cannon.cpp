@@ -47,6 +47,8 @@ void Cannon::Tick( const float deltaTime )
 
 void Cannon::Render()
 {
+	Entity::Render();
+
 	const float rotationAngle = 2 * k_PI / 3; // 120 degrees in radians
 
 	// Scaling the facing vector by the BB radius.

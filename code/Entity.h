@@ -25,7 +25,7 @@ public:
 
 	// Collisions handling.
 	virtual bool IsCollidingWith( const Entity& other ) const;
-	virtual void HandleCollision( Entity* other ) {}
+	virtual void HandleCollision( Entity* other );
 	virtual bool IsCollidingWithScreenBorders() const;
 	virtual bool IsCollidingWithScreenHorizontally() const;
 	virtual bool IsCollidingWithScreenVertically() const;
@@ -48,8 +48,14 @@ protected:
 
 	// Position handling.
 	void UpdatePosition( const float deltaTime );
+
+	// Collisions handling.
 	// Avoids going outside of the screen boundaries.
 	void ClampPosition();
+	// Detects overlapping.
+	bool IsOverlapping( const Entity& other ) const;
+	// Avoid overlapping between entities.
+	void ApplyMTV( Entity& other );
 
 	C_Application* m_Owner;
 	const unsigned int m_Color;

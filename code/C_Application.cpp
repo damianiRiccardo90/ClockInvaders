@@ -158,10 +158,6 @@ void C_Application::RenderEntities()
 	for ( auto it = m_Entities.begin(); it != m_Entities.end(); ++it )
 	{
 		( *it )->Render();
-		if ( k_DEBUGGING_ACTIVE )
-		{
-			( *it )->RenderBB();
-		}
 	}
 }
 

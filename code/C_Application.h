@@ -31,8 +31,6 @@ namespace Key
 	static const unsigned int k_SPACE = 0x10;
 }
 
-static const bool k_DEBUGGING_ACTIVE = true;
-
 ////////////////  F O R W A R D  D E C L A R A T I O N S  ////////////////
 
 class Cannon;

@@ -39,6 +39,8 @@ Clock::Clock( C_Application* owner, const Vector2D& position /*= Vector2D::s_ZER
 
 void Clock::Render()
 {
+	Entity::Render();
+
 	// Draw the external box containing the clock.
 
 	const Vector2D upLtVt = m_Position + Vector2D( -m_BBHalfDiagonal.GetX(), -m_BBHalfDiagonal.GetY() );
@@ -87,6 +89,8 @@ void Clock::Render()
 
 void Clock::HandleCollision( Entity* other )
 {
+	Entity::HandleCollision( other );
+
 	// Split the clock if we're being hit by a projectile, and the current size is higher than the allowed minimum.
 	if ( Projectile* projectilePtr = dynamic_cast< Projectile* >( other ) )
 	{
