@@ -1,14 +1,18 @@
 #pragma once
 
-///////////////////////////  C O N S T A N T S  //////////////////////////
-
-static const float k_PI = 3.1415926536f;
-
 //////////////////  C L A S S  D E C L A R A T I O N S  //////////////////
 
 class Vector2D
 {
 public:
+
+	// Construct on first use idiom, to ensure proper initialization of static members across different classes.
+	static const Vector2D& GetUp();
+	static const Vector2D& GetDown();
+	static const Vector2D& GetLeft();
+	static const Vector2D& GetRight();
+	static const Vector2D& GetZero();
+	static float GetPI();
 
 	explicit Vector2D( const float x = 0.f, const float y = 0.f );
 	Vector2D( const Vector2D& other );
@@ -36,8 +40,8 @@ public:
 	void SetY( const float newY ) { y = newY; }
 	float GetY() const { return y; }
 
-	Vector2D& Rotate( const float rad, const Vector2D origin = Vector2D::s_ZERO);
-	Vector2D& ClampRotate( const float rad, const float min, const float max, const Vector2D origin = s_ZERO );
+	Vector2D& Rotate( const float rad, const Vector2D origin = GetZero() );
+	Vector2D& ClampRotate( const float rad, const float min, const float max, const Vector2D origin = GetZero() );
 	// Returns the rotation in the range [0, 2PI], rotating counter-clockwise and starting from the s_Right vector.
 	float GetRotation() const;
 	Vector2D Abs() const;
@@ -45,11 +49,7 @@ public:
 	float Magnitude() const;
 	Vector2D Normalized() const;
 
-	static const Vector2D s_UP;
-	static const Vector2D s_DOWN;
-	static const Vector2D s_LEFT;
-	static const Vector2D s_RIGHT;
-	static const Vector2D s_ZERO;
+	static const float s_ROTATION_TOLERANCE;
 
 private:
 

@@ -5,10 +5,6 @@
 // Local.
 #include "Entity.h"
 
-///////////////////////////  C O N S T A N T S  //////////////////////////
-
-static const float k_PROJECTILE_DEFAULT_HALFLENGTH = 3.f;
-
 ////////////////  F O R W A R D  D E C L A R A T I O N S  ////////////////
 
 class C_Application;
@@ -29,4 +25,8 @@ public:
 	// Destroy the projectile when it hits the screen borders, or a clock entity.
 	virtual void HandleCollision( Entity* other ) override;
 	virtual void HandleScreenBordersCollision() override;
+
+	static const unsigned int s_DEFAULT_COLOR;
+	static const float s_DEFAULT_VELOCITY;
+	static const float s_DEFAULT_HALFLENGTH;
 };

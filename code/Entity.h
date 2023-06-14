@@ -17,7 +17,7 @@ class Entity
 public:
 
 	Entity( C_Application* owner, const unsigned int color, const Vector2D& halfDiagBB, const Vector2D& position, 
-		const Vector2D& facing = Vector2D::s_UP, const Vector2D& velocity = Vector2D::s_ZERO );
+		const Vector2D& facing = Vector2D::GetUp(), const Vector2D& velocity = Vector2D::GetZero() );
 	virtual ~Entity() {}
 
 	virtual void Tick( const float deltaTime );
@@ -43,6 +43,8 @@ public:
 
 	// Debugging.
 	void RenderBB();
+
+	static const bool s_DEBUGGING_ACTIVE;
 
 protected:
 

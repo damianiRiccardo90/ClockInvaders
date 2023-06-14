@@ -5,10 +5,6 @@
 // Local.
 #include "Entity.h"
 
-///////////////////////////  C O N S T A N T S  //////////////////////////
-
-static const float k_CANNON_DEFAULT_ANGULARVELOCITY = 1.5f;
-
 ////////////////  F O R W A R D  D E C L A R A T I O N S  ////////////////
 
 class C_Application;
@@ -37,6 +33,14 @@ public:
 	
 	// Enables/disables burst firing.
 	void SetFiring( const bool enable );
+
+	static const Vector2D s_DEFAULT_BBHALFDIAG;
+	static const unsigned int s_DEFAULT_COLOR;
+	static const float s_DEFAULT_OFFSETFROMBOTTOM;
+	static const float s_DEFAULT_BURSTFIREDELAY;
+	static const float s_DEFAULT_MINROTATIONANGLE;
+	static const float s_DEFAULT_MAXROTATIONANGLE;
+	static const float s_DEFAULT_ANGULARVELOCITY;
 
 private:
 

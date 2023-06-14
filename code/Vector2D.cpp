@@ -7,19 +7,47 @@
 #include <algorithm>
 #include <cmath>
 
-///////////////////////////  C O N S T A N T S  //////////////////////////
-
-static const float k_ROTATION_TOLERANCE = 0.001f;
-
 //////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
-const Vector2D Vector2D::s_UP( 0.f, -1.f );
-const Vector2D Vector2D::s_DOWN( 0.f, 1.f );
-const Vector2D Vector2D::s_LEFT( -1.f, 0.f );
-const Vector2D Vector2D::s_RIGHT( 1.f, 0.f );
-const Vector2D Vector2D::s_ZERO( 0.f, 0.f );
+const float Vector2D::s_ROTATION_TOLERANCE = 0.001f;
 
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
+
+const Vector2D& Vector2D::GetUp()
+{
+	static const Vector2D k_UP( 0.f, -1.f );
+	return k_UP;
+}
+
+const Vector2D& Vector2D::GetDown()
+{
+	static Vector2D k_DOWN( 0.f, 1.f );
+	return k_DOWN;
+}
+
+const Vector2D& Vector2D::GetLeft()
+{
+	static const Vector2D k_LEFT( -1.f, 0.f );
+	return k_LEFT;
+}
+
+const Vector2D& Vector2D::GetRight()
+{
+	static const Vector2D k_RIGHT( 1.f, 0.f );
+	return k_RIGHT;
+}
+
+const Vector2D& Vector2D::GetZero()
+{
+	static const Vector2D k_ZERO( 0.f, 0.f );
+	return k_ZERO;
+}
+
+float Vector2D::GetPI()
+{
+	static const float k_PI = 3.1415926536f;
+	return k_PI;
+}
 
 Vector2D::Vector2D( const float x /*= 0.f*/, const float y /*= 0.f*/ )
 	: x( x )
@@ -169,11 +197,11 @@ float Vector2D::GetRotation() const
 	// Wrap the angle around to the range of [ 0, 2PI ].
 	if ( rotation < 0.f )
 	{
-		rotation += 2 * k_PI;
+		rotation += 2 * GetPI();
 	}
-	else if ( rotation >= 2 * k_PI )
+	else if ( rotation >= 2 * GetPI() )
 	{
-		rotation -= 2 * k_PI;
+		rotation -= 2 * GetPI();
 	}
 
 	return rotation;

@@ -63,8 +63,8 @@ void C_Application::RequestSpawnProjectile( const Vector2D& position, const Vect
 	m_ToBeSpawnedEntities.push_back( std::move( projectileUniquePtr ) );
 }
 
-void C_Application::RequestSpawnClock( const Vector2D& position /*= Vector2D::s_ZERO*/, 
-	const Vector2D& velocity /*= Vector2D::s_ZERO*/, const Vector2D& halfDiag /*= k_CLOCK_DEFAULT_BBHALFDIAG*/ )
+void C_Application::RequestSpawnClock( const Vector2D& position /*= Vector2D::GetZero()*/, 
+	const Vector2D& velocity /*= Vector2D::GetZero()*/, const Vector2D& halfDiag /*= Clock::s_DEFAULT_BBHALFDIAG*/ )
 {
 	std::unique_ptr< Entity > projectileUniquePtr =
 		std::make_unique< Clock >( this, position, velocity, halfDiag );
@@ -77,11 +77,11 @@ void C_Application::ProcessInput( const unsigned int pressedKeys )
 
 	if ( pressedKeys & Key::k_LEFT )
 	{
-		m_Cannon->SetAngularVelocity( k_CANNON_DEFAULT_ANGULARVELOCITY );
+		m_Cannon->SetAngularVelocity( Cannon::s_DEFAULT_ANGULARVELOCITY );
 	}
 	else if ( pressedKeys & Key::k_RIGHT )
 	{
-		m_Cannon->SetAngularVelocity( -k_CANNON_DEFAULT_ANGULARVELOCITY );
+		m_Cannon->SetAngularVelocity( -Cannon::s_DEFAULT_ANGULARVELOCITY );
 	}
 	else
 	{

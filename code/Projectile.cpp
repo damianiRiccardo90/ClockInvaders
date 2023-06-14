@@ -8,10 +8,11 @@
 #include "Clock.h"
 #include "graphics.h"
 
-///////////////////////////  C O N S T A N T S  //////////////////////////
+//////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
-static const unsigned int k_PROJECTILE_DEFAULT_COLOR = Color::k_WHITE;
-static const float k_PROJECTILE_DEFAULT_VELOCITY = 300.f;
+const unsigned int Projectile::s_DEFAULT_COLOR = Color::k_WHITE;
+const float Projectile::s_DEFAULT_VELOCITY = 300.f;
+const float Projectile::s_DEFAULT_HALFLENGTH = 3.f;
 
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
@@ -21,16 +22,16 @@ Projectile::Projectile( C_Application* owner, const Vector2D& position, const Ve
 	// its absolute value (so that it points in the right direction no matter the rotation applied) and then scale 
 	// it using half the total length of the line (which represents a projectile). I'm assuming the facing vector
 	// is already normalized.
-	: Entity( owner, k_PROJECTILE_DEFAULT_COLOR, Vector2D( facing.Abs() * k_PROJECTILE_DEFAULT_HALFLENGTH ), 
-		position, facing, facing * k_PROJECTILE_DEFAULT_VELOCITY )
+	: Entity( owner, s_DEFAULT_COLOR, Vector2D( facing.Abs() * s_DEFAULT_HALFLENGTH ), position, facing, 
+		facing * s_DEFAULT_VELOCITY )
 {}
 
 void Projectile::Render()
 {
 	Entity::Render();
 
-	const Vector2D lineStart = m_Position - m_Facing * k_PROJECTILE_DEFAULT_HALFLENGTH;
-	const Vector2D lineEnd = m_Position + m_Facing * k_PROJECTILE_DEFAULT_HALFLENGTH;
+	const Vector2D lineStart = m_Position - m_Facing * s_DEFAULT_HALFLENGTH;
+	const Vector2D lineEnd = m_Position + m_Facing * s_DEFAULT_HALFLENGTH;
 
 	const int xLineStart = static_cast< int >( lineStart.GetX() );
 	const int yLineStart = static_cast< int >( lineStart.GetY() );

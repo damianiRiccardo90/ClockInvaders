@@ -5,17 +5,17 @@
 
 // Local.
 #include "C_Application.h"
-#include "Vector2D.h"
+//#include "Vector2D.h"
 
-///////////////////////////  C O N S T A N T S  //////////////////////////
+//////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
-static const bool k_DEBUGGING_ACTIVE = false;
+const bool Entity::s_DEBUGGING_ACTIVE = false;
 
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
 Entity::Entity( C_Application* owner, const unsigned int color, const Vector2D& halfDiagBB, 
-	const Vector2D& position, const Vector2D& facing /*= Vector2D::s_Up*/, 
-	const Vector2D& velocity /*= Vector2D::s_Zero*/ )
+	const Vector2D& position, const Vector2D& facing /*= Vector2D::GetUp()*/, 
+	const Vector2D& velocity /*= Vector2D::GetZero()*/ )
 	: m_Owner( owner )
 	, m_Color( color )
 	, m_BBHalfDiagonal( halfDiagBB.Abs() )
@@ -32,7 +32,7 @@ void Entity::Tick( const float deltaTime )
 
 void Entity::Render()
 {
-	if ( k_DEBUGGING_ACTIVE )
+	if ( s_DEBUGGING_ACTIVE )
 	{
 		RenderBB();
 	}

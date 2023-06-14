@@ -95,6 +95,7 @@
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="RandomGenerator.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
@@ -105,6 +106,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="RandomGenerator.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>

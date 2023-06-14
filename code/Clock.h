@@ -20,8 +20,8 @@ class Clock : public Entity
 {
 public:
 
-	explicit Clock( C_Application* owner, const Vector2D& position = Vector2D::s_ZERO, 
-		const Vector2D& velocity = Vector2D::s_ZERO, const Vector2D& halfDiag = k_CLOCK_DEFAULT_BBHALFDIAG );
+	explicit Clock( C_Application* owner, const Vector2D& position = Vector2D::GetZero(), 
+		const Vector2D& velocity = Vector2D::GetZero(), const Vector2D& halfDiag = s_DEFAULT_BBHALFDIAG );
 
 	// Draw the clock.
 	virtual void Render() override;
@@ -31,6 +31,16 @@ public:
 	virtual void HandleCollision( Entity* other ) override;
 	// Bounce off the screen by altering the velocity vector.
 	virtual void HandleScreenBordersCollision() override;
+
+	static const Vector2D s_DEFAULT_BBHALFDIAG;
+	static const Vector2D s_DEFAULT_MINHALFDIAG;
+	static const unsigned int s_DEFAULT_COLOR;
+	static const unsigned int s_DEFAULT_HOURSHANDCOLOR;
+	static const unsigned int s_DEFAULT_MINUTESHANDCOLOR;
+	static const float s_DEFAULT_MINVELOCITY;
+	static const float s_DEFAULT_MAXVELOCITY;
+	static const float s_DEFAULT_HOURSANGLESPAN;
+	static const float s_DEFAULT_MINUTESANGLESPAN;
 
 private:
 
