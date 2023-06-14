@@ -11,7 +11,7 @@
 //////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
 const Vector2D Cannon::s_DEFAULT_BBHALFDIAG = Vector2D( 25.f, 25.f );
-const unsigned int Cannon::s_DEFAULT_COLOR = Color::k_BLUE;
+const unsigned int Cannon::s_DEFAULT_COLOR = C_Application::GetBlue();
 const float Cannon::s_DEFAULT_OFFSETFROMBOTTOM = 50.f;
 const float Cannon::s_DEFAULT_BURSTFIREDELAY = 0.001f;
 const float Cannon::s_DEFAULT_MINROTATIONANGLE = 0.f;

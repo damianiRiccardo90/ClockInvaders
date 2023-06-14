@@ -10,7 +10,7 @@
 
 //////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
-const unsigned int Projectile::s_DEFAULT_COLOR = Color::k_WHITE;
+const unsigned int Projectile::s_DEFAULT_COLOR = C_Application::GetWhite();
 const float Projectile::s_DEFAULT_VELOCITY = 300.f;
 const float Projectile::s_DEFAULT_HALFLENGTH = 3.f;
 

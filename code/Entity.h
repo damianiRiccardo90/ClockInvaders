@@ -45,6 +45,7 @@ public:
 	void RenderBB();
 
 	static const bool s_DEBUGGING_ACTIVE;
+	static const unsigned int s_DEBUGGING_COLOR;
 
 protected:
 

@@ -8,15 +8,54 @@
 #include "graphics.h"
 #include "Projectile.h"
 
+//////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
+
+const unsigned int C_Application::s_LEFT  = 0x01;
+const unsigned int C_Application::s_UP    = 0x02;
+const unsigned int C_Application::s_RIGHT = 0x04;
+const unsigned int C_Application::s_DOWN  = 0x08;
+const unsigned int C_Application::s_SPACE = 0x10;
+
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
+
+unsigned int C_Application::GetRed()
+{
+	static const unsigned int k_RED = GetRGB( 255, 0, 0 );
+	return k_RED;
+}
+
+unsigned int C_Application::GetGreen()
+{
+	static const unsigned int k_GREEN = GetRGB( 0, 255, 0 );
+	return k_GREEN;
+}
+
+unsigned int C_Application::GetBlue()
+{
+	static const unsigned int k_BLUE = GetRGB( 0, 0, 255 );
+	return k_BLUE;
+}
+
+unsigned int C_Application::GetBlack()
+{
+	static const unsigned int k_BLACK = GetRGB( 0, 0, 0 );
+	return k_BLACK;
+}
+
+unsigned int C_Application::GetWhite()
+{
+	static const unsigned int k_WHITE = GetRGB( 255, 255, 255 );
+	return k_WHITE;
+}
 
 C_Application::C_Application( const float screenWidth, const float screenHeight )
 	: m_ScreenWidth( screenWidth )
 	, m_ScreenHeight( screenHeight )
-	, m_ScreenBackgroundColor( Color::k_BLACK )
+	, m_ScreenBackgroundColor( GetBlack() )
 	, m_DeltaTime( 0 )
 	, m_Cannon( nullptr )
 	, m_Entities()
+	, m_ToBeSpawnedEntities()
 {
 	SpawnStartingEntities();
 }
@@ -75,11 +114,11 @@ void C_Application::ProcessInput( const unsigned int pressedKeys )
 {
 	if ( !m_Cannon ) return;
 
-	if ( pressedKeys & Key::k_LEFT )
+	if ( pressedKeys & s_LEFT )
 	{
 		m_Cannon->SetAngularVelocity( Cannon::s_DEFAULT_ANGULARVELOCITY );
 	}
-	else if ( pressedKeys & Key::k_RIGHT )
+	else if ( pressedKeys & s_RIGHT )
 	{
 		m_Cannon->SetAngularVelocity( -Cannon::s_DEFAULT_ANGULARVELOCITY );
 	}
@@ -88,7 +127,7 @@ void C_Application::ProcessInput( const unsigned int pressedKeys )
 		m_Cannon->SetAngularVelocity( 0.f );
 	}
 
-	if ( pressedKeys & Key::k_SPACE )
+	if ( pressedKeys & s_SPACE )
 	{
 		m_Cannon->SetFiring( true );
 	}

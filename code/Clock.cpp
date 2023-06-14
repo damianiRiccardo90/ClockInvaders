@@ -14,9 +14,9 @@
 
 const Vector2D Clock::s_DEFAULT_BBHALFDIAG = Vector2D( 50.f, 50.f );
 const Vector2D Clock::s_DEFAULT_MINHALFDIAG = Vector2D( 2.5f, 2.5f );
-const unsigned int Clock::s_DEFAULT_COLOR = Color::k_RED;
-const unsigned int Clock::s_DEFAULT_HOURSHANDCOLOR = Color::k_WHITE;
-const unsigned int Clock::s_DEFAULT_MINUTESHANDCOLOR = Color::k_BLUE;
+const unsigned int Clock::s_DEFAULT_COLOR = C_Application::GetRed();
+const unsigned int Clock::s_DEFAULT_HOURSHANDCOLOR = C_Application::GetWhite();
+const unsigned int Clock::s_DEFAULT_MINUTESHANDCOLOR = C_Application::GetBlue();
 const float Clock::s_DEFAULT_MINVELOCITY = 50.f;
 const float Clock::s_DEFAULT_MAXVELOCITY = 200.f;
 const float Clock::s_DEFAULT_HOURSANGLESPAN = Vector2D::GetPI() / 12;

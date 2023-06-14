@@ -5,10 +5,12 @@
 
 // Local.
 #include "C_Application.h"
+#include "graphics.h"
 
 //////////////  S T A T I C  M E M B E R  V A R I A B L E S  /////////////
 
 const bool Entity::s_DEBUGGING_ACTIVE = false;
+const unsigned int Entity::s_DEBUGGING_COLOR = C_Application::GetGreen();
 
 ////////////////  F U N C T I O N  D E F I N I T I O N S  ////////////////
 
@@ -95,10 +97,10 @@ void Entity::RenderBB()
 	const int yLowRtVt = static_cast<int>( lowRtVt.GetY() );
 	const int xUpRtVt = static_cast<int>( upRtVt.GetX() );
 	const int yUpRtVt = static_cast<int>( upRtVt.GetY() );
-	DrawLine( xUpLtVt, yUpLtVt, xLowLtVt, yLowLtVt, Color::k_GREEN );
-	DrawLine( xLowLtVt, yLowLtVt, xLowRtVt, yLowRtVt, Color::k_GREEN );
-	DrawLine( xLowRtVt, yLowRtVt, xUpRtVt, yUpRtVt, Color::k_GREEN );
-	DrawLine( xUpRtVt, yUpRtVt, xUpLtVt, yUpLtVt, Color::k_GREEN );
+	DrawLine( xUpLtVt, yUpLtVt, xLowLtVt, yLowLtVt, s_DEBUGGING_COLOR );
+	DrawLine( xLowLtVt, yLowLtVt, xLowRtVt, yLowRtVt, s_DEBUGGING_COLOR );
+	DrawLine( xLowRtVt, yLowRtVt, xUpRtVt, yUpRtVt, s_DEBUGGING_COLOR );
+	DrawLine( xUpRtVt, yUpRtVt, xUpLtVt, yUpLtVt, s_DEBUGGING_COLOR );
 }
 
 void Entity::UpdatePosition( const float deltaTime )

@@ -9,27 +9,6 @@
 // Local.
 #include "Clock.h"
 #include "Entity.h"
-#include "graphics.h"
-
-///////////////////////////  C O N S T A N T S  //////////////////////////
-
-namespace Color
-{
-	static const unsigned int k_RED   = GetRGB( 255, 0,   0 );
-	static const unsigned int k_GREEN = GetRGB( 0,   255, 0 );
-	static const unsigned int k_BLUE  = GetRGB( 0,   0,   255 );
-	static const unsigned int k_BLACK = GetRGB( 0,   0,   0 );
-	static const unsigned int k_WHITE = GetRGB( 255, 255, 255 );
-}
-
-namespace Key
-{
-	static const unsigned int k_LEFT  = 0x01;
-	static const unsigned int k_UP    = 0x02;
-	static const unsigned int k_RIGHT = 0x04;
-	static const unsigned int k_DOWN  = 0x08;
-	static const unsigned int k_SPACE = 0x10;
-}
 
 ////////////////  F O R W A R D  D E C L A R A T I O N S  ////////////////
 
@@ -40,6 +19,12 @@ class Cannon;
 class C_Application
 {
 public:
+
+	static unsigned int GetRed();
+	static unsigned int GetGreen();
+	static unsigned int GetBlue();
+	static unsigned int GetBlack();
+	static unsigned int GetWhite();
 	
 	C_Application( const float screenWidth, const float screenHeight );
 	~C_Application() {}
@@ -55,6 +40,12 @@ public:
 	void RequestSpawnProjectile( const Vector2D& position, const Vector2D& facing );
 	void RequestSpawnClock( const Vector2D& position = Vector2D::GetZero(), 
 		const Vector2D& velocity = Vector2D::GetZero(), const Vector2D& halfDiag = Clock::s_DEFAULT_BBHALFDIAG );
+
+	static const unsigned int s_LEFT;
+	static const unsigned int s_UP;
+	static const unsigned int s_RIGHT;
+	static const unsigned int s_DOWN;
+	static const unsigned int s_SPACE;
 
 private:
 
