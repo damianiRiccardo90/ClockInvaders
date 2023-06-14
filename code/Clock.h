@@ -36,10 +36,11 @@ private:
 
 	// Moves the clock to a random position on screen and gives it a random velocity and facing.
 	void Randomize();
+	// Compute a random position within the screen range boundaries.
 	Vector2D GetRandomPosition() const;
+	// Compute a velocity vector that has a random rotation and a random magnitude chosen within the default range.
 	Vector2D GetRandomVelocity() const;
-	float GetRandomFloat( const float min, const float max ) const;
-	bool GetRandomBool() const;
+
 	// Spawn 2 different new clocks, half the size of the current one, and placed side by side diagonally. Then
 	// destroy the current clock.
 	void Split();

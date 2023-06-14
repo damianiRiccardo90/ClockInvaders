@@ -3,13 +3,11 @@
 // Header.
 #include "Clock.h"
 
-// System.
-#include <random>
-
 // Local.
 #include "C_Application.h"
 #include "graphics.h"
 #include "Projectile.h"
+#include "RandomGenerator.h"
 #include "time.h"
 #include "Vector2D.h"
 
@@ -138,41 +136,24 @@ Vector2D Clock::GetRandomPosition() const
 {
 	if ( !m_Owner ) return Vector2D::s_ZERO;
 
-	// Compute a random position within the screen range boundaries.
 	const float xMin = m_BBHalfDiagonal.GetX();
 	const float xMax = m_Owner->GetScreenWidth() - m_BBHalfDiagonal.GetX();
 	const float yMin = m_BBHalfDiagonal.GetY();
 	const float yMax = m_Owner->GetScreenHeight() - m_BBHalfDiagonal.GetY();
-	return Vector2D( GetRandomFloat( xMin, xMax ), GetRandomFloat( yMin, yMax ) );
+
+	RandomGenerator& random = RandomGenerator::GetInstance();
+	return Vector2D( random.GenerateFloat( xMin, xMax ), random.GenerateFloat( yMin, yMax ) );
 }
 
 Vector2D Clock::GetRandomVelocity() const
 {
-	// Compute a velocity vector that has a random rotation and a random magnitude chosen within the default range.
+	RandomGenerator& random = RandomGenerator::GetInstance();
 	const float randomVelocityMagnitude =
-		GetRandomFloat( k_CLOCK_DEFAULT_MINVELOCITY, k_CLOCK_DEFAULT_MAXVELOCITY );
-	const float randomRotation = GetRandomFloat( 0.f, 2 * k_PI );
+		random.GenerateFloat( k_CLOCK_DEFAULT_MINVELOCITY, k_CLOCK_DEFAULT_MAXVELOCITY );
+	const float randomRotation = random.GenerateFloat( 0.f, 2 * k_PI );
 	Vector2D randomVelocity = Vector2D::s_UP;
 	randomVelocity.Rotate( randomRotation ) *= randomVelocityMagnitude;
 	return randomVelocity;
-}
-
-float Clock::GetRandomFloat( const float min, const float max ) const
-{
-	// Generate a random number
-	std::random_device rd;
-	std::mt19937 gen( rd() );
-	std::uniform_real_distribution< float > distribution( min, max );
-	return distribution( gen );
-}
-
-bool Clock::GetRandomBool() const
-{
-	// Generate a random boolean value
-	std::random_device rd;
-	std::mt19937 gen( rd() );
-	std::uniform_int_distribution<> distribution( 0, 1 );
-	return distribution( gen ) == 1;
 }
 
 void Clock::Split()
@@ -180,7 +161,8 @@ void Clock::Split()
 	if ( !m_Owner ) return;
 
 	const Vector2D halfCurrBB = m_BBHalfDiagonal / 2;
-	const bool switchSides = GetRandomBool();
+	RandomGenerator& random = RandomGenerator::GetInstance();
+	const bool switchSides = random.GenerateBool();
 	const Vector2D firstClockOffsetPos = 
 		switchSides ? Vector2D( halfCurrBB.GetX(), -halfCurrBB.GetY() ) : halfCurrBB;
 	m_Owner->RequestSpawnClock( m_Position + firstClockOffsetPos, GetRandomVelocity(), halfCurrBB );
