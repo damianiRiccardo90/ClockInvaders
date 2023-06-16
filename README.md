@@ -12,4 +12,4 @@ A small 2D project about shooting floating (and bouncing!! OMG) destructible clo
 8.  Make sure there is a testing of collisions of the clocks with the projectiles shot from the cannon. When the clocks are shot down, they change into two smaller clocks and the projectile disappears. If the too small clocks are shot down, they disappear completely (small = approximately of 5x5 pixels).
 9.  Once the last clocks are shot down, the two big clocks appear again (see point 6) and the whole procedure repeats.
 
-![](https://github.com/damianiRiccardo90/ClockInvaders/demo.gif)
+![](https://github.com/ClockInvaders/demo.gif)
