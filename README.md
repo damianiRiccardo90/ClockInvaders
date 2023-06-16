@@ -11,3 +11,5 @@ A small 2D project about shooting floating (and bouncing!! OMG) destructible clo
 7.  Set the clocks in motion at random speed and direction. When bumping into a screen margin, the clocks rebound; when bumping into each other both the objects rebound away from each other (the direction of their movement in x and y reversed as appropriate).
 8.  Make sure there is a testing of collisions of the clocks with the projectiles shot from the cannon. When the clocks are shot down, they change into two smaller clocks and the projectile disappears. If the too small clocks are shot down, they disappear completely (small = approximately of 5x5 pixels).
 9.  Once the last clocks are shot down, the two big clocks appear again (see point 6) and the whole procedure repeats.
+
+![](https://github.com/damianiRiccardo90/ClockInvaders/demo.gif)
